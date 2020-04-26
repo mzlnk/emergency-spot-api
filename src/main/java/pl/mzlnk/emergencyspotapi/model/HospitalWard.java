@@ -1,7 +1,10 @@
 package pl.mzlnk.emergencyspotapi.model;
 
+import lombok.Getter;
+
 import javax.persistence.*;
 
+@Getter
 @Entity
 @Table(name = "hospital_wards")
 public class HospitalWard {

@@ -1,8 +1,11 @@
 package pl.mzlnk.emergencyspotapi.model;
 
+import lombok.Getter;
+
 import javax.persistence.*;
 import java.util.List;
 
+@Getter
 @Entity
 @Table(name = "hospitals")
 public class Hospital {
@@ -25,7 +28,7 @@ public class Hospital {
     private double latitude;
 
     @Column(name = "country")
-    private String contry;
+    private String country;
 
     @Column(name = "city")
     private String city;
