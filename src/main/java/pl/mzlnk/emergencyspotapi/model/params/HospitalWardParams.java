@@ -23,6 +23,7 @@ public class HospitalWardParams {
                 HospitalWard
                 .builder()
                 .wardType(this.wardType)
+                        .hospitalId(this.hospitalId)
                 .build()
         );
     }

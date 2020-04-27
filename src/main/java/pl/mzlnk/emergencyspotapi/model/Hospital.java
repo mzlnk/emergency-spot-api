@@ -1,5 +1,7 @@
 package pl.mzlnk.emergencyspotapi.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
 import javax.persistence.*;
@@ -9,6 +11,7 @@ import java.util.List;
 @Entity
 @Builder
 @NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "hospitals")
 public class Hospital {
 
@@ -42,9 +45,13 @@ public class Hospital {
     private Integer streetNumber;
 
     @OneToMany(mappedBy = "hospital")
+    @JsonManagedReference
+    @JsonIgnoreProperties({"hospitalId"})
     private List<HospitalWard> wards;
 
     @OneToMany(mappedBy = "hospital")
+    @JsonManagedReference
+    @JsonIgnoreProperties({"hospitalId"})
     private List<HospitalReview> reviews;
 
 }

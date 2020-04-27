@@ -7,6 +7,7 @@ import pl.mzlnk.emergencyspotapi.model.HospitalWardTypeEnum;
 import pl.mzlnk.emergencyspotapi.model.params.HospitalParams;
 import pl.mzlnk.emergencyspotapi.service.HospitalService;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,7 +35,7 @@ public class HospitalController {
                                 .latitude(latitude)
                                 .country(country)
                                 .city(city)
-                                .wards(wards)
+                                .wards(wards != null ? wards : new ArrayList<>())
                                 .build()
                 );
     }

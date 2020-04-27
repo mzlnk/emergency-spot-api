@@ -1,5 +1,7 @@
 package pl.mzlnk.emergencyspotapi.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,6 +12,7 @@ import javax.persistence.*;
 @Getter
 @Builder
 @NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "hospital_reviews")
 public class HospitalReview {
 
@@ -24,8 +27,12 @@ public class HospitalReview {
     @Column(name = "rating")
     private Double rating;
 
+    @Column(name = "hospital_id")
+    private Long hospitalId;
+
     @ManyToOne
-    @JoinColumn(name = "hospital_id")
+    @JoinColumn(name = "hospital_id", insertable = false, updatable = false)
+    @JsonBackReference
     private Hospital hospital;
 
 }

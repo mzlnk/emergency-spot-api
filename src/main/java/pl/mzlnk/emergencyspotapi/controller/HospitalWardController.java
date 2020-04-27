@@ -19,8 +19,8 @@ public class HospitalWardController {
 
     @GetMapping
     public List<HospitalWard> findAll(@RequestParam(required = false, name = "ward") HospitalWardTypeEnum wardType,
-                                      @RequestParam(required = false, name = "min_capacity") Integer minCapacity,
-                                      @RequestParam(required = false, name = "max_capacity") Integer maxCapacity,
+                                      @RequestParam(required = false, name = "min_capacity", defaultValue = "0") Integer minCapacity,
+                                      @RequestParam(required = false, name = "max_capacity", defaultValue = "2147483647") Integer maxCapacity,
                                       @RequestParam(required = false, name = "hospital") Long hospitalId) {
 
         return hospitalWardService

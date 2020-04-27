@@ -1,10 +1,10 @@
 package pl.mzlnk.emergencyspotapi.service.impl;
 
 import lombok.AllArgsConstructor;
+import org.slf4j.Logger;
 import org.springframework.stereotype.Service;
 import pl.mzlnk.emergencyspotapi.model.HospitalWard;
 import pl.mzlnk.emergencyspotapi.model.params.HospitalWardParams;
-import pl.mzlnk.emergencyspotapi.repository.HospitalRepository;
 import pl.mzlnk.emergencyspotapi.repository.HospitalWardRepository;
 import pl.mzlnk.emergencyspotapi.service.HospitalWardService;
 
@@ -17,30 +17,16 @@ import java.util.stream.Collectors;
 public class HospitalWardServiceImpl implements HospitalWardService {
 
     private final HospitalWardRepository hospitalWardRepository;
-    private final HospitalRepository hospitalRepository;
+    private final Logger logger;
 
     @Override
     public List<HospitalWard> findAll(HospitalWardParams params) {
-        List<HospitalWard> result = hospitalWardRepository.findAll(params.toExample());
-
-        result = result
+        return hospitalWardRepository
+                .findAll(params.toExample())
                 .stream()
                 .filter(ward -> ward.getCapacity() >= params.minCapacity)
                 .filter(ward -> ward.getCapacity() <= params.maxCapacity)
                 .collect(Collectors.toList());
-
-        final List<HospitalWard> finalResult = result;
-        result = Optional.of(params.hospitalId)
-                .flatMap(hospitalRepository::findById)
-                .map(hospital -> {
-                    return finalResult
-                            .stream()
-                            .filter(ward -> ward.getHospital().equals(hospital))
-                            .collect(Collectors.toList());
-                })
-                .orElse(finalResult);
-
-        return result;
     }
 
     @Override
