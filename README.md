@@ -5,8 +5,6 @@ Backend server with REST API provided for EmergencySpot App. Built with Spring B
 
 ### REST API - endpoints:
 
-### Overview:
-
 * [/hospitals GET](#list-hospitals)
 * [/hospitals/{id} GET](#find-one-hospital)
 * [/hospitals/nearest GET](#find-nearest-hospital)
@@ -18,9 +16,17 @@ Backend server with REST API provided for EmergencySpot App. Built with Spring B
 * [/reviews/{id} PUT](#update-review)
 * [/reviews/{id} DELETE](#delete-review)
 
+### REST API - model structure:
+
++ [hospital](#hospital)
++ [ward](#ward)
++ [review](#review)
+
 ---
 
-### List hospitals:
+## Endpoints:
+
+### List hospitals
 
 Returns all hospitals matching to applied filters
 
@@ -43,37 +49,6 @@ Usage:
 + `GET /hospitals?name=X`
 + `GET /hospitals?name=X&city=Y&longitude=30.4516&wards=[ICU,ER]`
 
-Sample response:
-
-```json
-[
-  {
-    "id": 1,
-    "name": "Hospital 1",
-    "description": "Hospital Description",
-    "longitude":3 0.5689,
-    "latitude": 70.2391,
-    "country": "US",
-    "city": "New York",
-    "street": "10th Street",
-    "streetNumber": 1092,
-    "wards": [
-      {
-        "id": 3,
-        "wardType": "ICU", 
-        "capacity": 200
-      },
-      {
-        "id": 4,
-        "wardType": "ICU",
-        "capacity": 200
-      }
-    ],
-    "reviews": []
-   }
-]
-```
-
 ---
 
 ### Find one hospital
@@ -88,35 +63,6 @@ Usage:
 
 + `GET /hospitals/981341`
 + `GET /hospitals/24141`
-
-Sample response:
-
-```json
-{
-  "id": 1,
-  "name": "Hospital 1",
-  "description": "Hospital Description",
-  "longitude":3 0.5689,
-  "latitude": 70.2391,
-  "country": "US",
-  "city": "New York",
-  "street": "10th Street",
-  "streetNumber": 1092,
-  "wards": [
-    {
-      "id": 3,
-      "wardType": "ICU", 
-      "capacity": 200
-    },
-    {
-      "id": 4,
-      "wardType": "ICU",
-      "capacity": 200
-    }
-  ],
-  "reviews": []
-}
-```
 
 ---
 
@@ -275,3 +221,68 @@ Usage:
 + `DELETE /reviews/1748391`
 + `DELETE /reviews/6382649001`
 
+---
+
+## Model structure:
+
+Describes details about hospital with given ID.
+
+### hospital
+
+```json
+{
+  "id": 1,
+  "name": "Hospital 1",
+  "description": "Hospital Description",
+  "longitude":3 0.5689,
+  "latitude": 70.2391,
+  "country": "US",
+  "city": "New York",
+  "street": "10th Street",
+  "streetNumber": 1092,
+  "wards": [
+    {
+      "id": 3,
+      "wardType": "ICU", 
+      "capacity": 200
+    },
+    {
+      "id": 4,
+      "wardType": "ICU",
+      "capacity": 200
+    }
+  ],
+  "reviews": []
+}
+```
+
+---
+
+### ward
+
+Describes details about hospital ward with given ID.
+
+```json
+{
+  "id": 3,
+  "wardType": "ICU",
+  "capacity": 200,
+  "hospitalId": 1
+}
+```
+
+---
+
+### review
+
+Describes details about user review associated with hospital.
+
+```json
+{
+  "id": 57294,
+  "review": "ECU in Hospital 1 review",
+  "rating": 7.8,
+  "userId": 194781,
+  "hospitalId": 8492
+}
+```
