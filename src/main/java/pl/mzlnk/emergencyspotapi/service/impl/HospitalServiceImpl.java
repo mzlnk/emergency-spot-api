@@ -1,11 +1,11 @@
 package pl.mzlnk.emergencyspotapi.service.impl;
 
-import org.apache.commons.collections4.IterableUtils;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import pl.mzlnk.emergencyspotapi.model.Hospital;
 import pl.mzlnk.emergencyspotapi.model.HospitalWard;
 import pl.mzlnk.emergencyspotapi.model.HospitalWardTypeEnum;
+import pl.mzlnk.emergencyspotapi.model.params.HospitalParams;
 import pl.mzlnk.emergencyspotapi.repository.HospitalRepository;
 import pl.mzlnk.emergencyspotapi.service.HospitalService;
 import pl.mzlnk.emergencyspotapi.utils.distance.Coordinates;
@@ -13,55 +13,35 @@ import pl.mzlnk.emergencyspotapi.utils.distance.DistanceUtils;
 
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
 @Service
+@AllArgsConstructor
 public class HospitalServiceImpl implements HospitalService {
 
-    @Autowired
-    private HospitalRepository hospitalRepository;
+    private final HospitalRepository hospitalRepository;
 
     @Override
-    public List<Hospital> findAll() {
-        return IterableUtils.toList(hospitalRepository.findAll());
+    public List<Hospital> findAll(HospitalParams params) {
+        List<Hospital> result = hospitalRepository.findAll(params.toExample());
+
+        if (!params.wards.isEmpty()) {
+            result = result
+                    .stream()
+                    .filter(hospital ->
+                            hospital.getWards()
+                                    .stream()
+                                    .map(HospitalWard::getWardType)
+                                    .anyMatch(params.wards::contains))
+                    .collect(Collectors.toList());
+        }
+
+        return result;
     }
 
     @Override
-    public List<Hospital> findByCountry(String country) {
-        return IterableUtils.toList(hospitalRepository.findByCountry(country));
-    }
-
-    @Override
-    public List<Hospital> findByCity(String city) {
-        return IterableUtils.toList(hospitalRepository.findByCity(city));
-    }
-
-    @Override
-    public List<Hospital> findByWardType(HospitalWardTypeEnum wardType) {
-        return StreamSupport.stream(hospitalRepository.findAll().spliterator(), true)
-                .filter(hospital -> {
-                    return hospital.getWards()
-                            .stream()
-                            .map(HospitalWard::getWardType)
-                            .anyMatch(type -> type.equals(wardType));
-                })
-                .collect(Collectors.toList());
-    }
-
-    @Override
-    public Optional<Hospital> findById(long id) {
+    public Optional<Hospital> findOne(Long id) {
         return hospitalRepository.findById(id);
-    }
-
-    @Override
-    public Optional<Hospital> findByName(String name) {
-        return hospitalRepository.findByName(name);
-    }
-
-    @Override
-    public Optional<Hospital> findByCoordinates(double longitude, double latitude) {
-        return hospitalRepository.findByLongitudeAndLatitude(longitude, latitude);
     }
 
     @Override
@@ -91,6 +71,7 @@ public class HospitalServiceImpl implements HospitalService {
 
     @Override
     public void deleteById(long id) {
-
+        hospitalRepository.deleteById(id);
     }
+
 }

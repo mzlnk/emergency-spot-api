@@ -1,11 +1,13 @@
 package pl.mzlnk.emergencyspotapi.model;
 
+import lombok.Builder;
 import lombok.Getter;
 
 import javax.persistence.*;
 
 @Getter
 @Entity
+@Builder
 @Table(name = "hospital_wards")
 public class HospitalWard {
 
