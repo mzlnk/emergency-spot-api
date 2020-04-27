@@ -20,6 +20,7 @@ import java.util.stream.StreamSupport;
 public class HospitalServiceImpl implements HospitalService {
 
     private final HospitalRepository hospitalRepository;
+    private final DistanceUtils distanceUtils;
 
     @Override
     public List<Hospital> findAll(HospitalParams params) {
@@ -52,7 +53,7 @@ public class HospitalServiceImpl implements HospitalService {
                 .map(hospital -> {
                     return new AbstractMap.SimpleEntry<>(
                             hospital,
-                            DistanceUtils.calculateDistance(coords, Coordinates.fromHospital(hospital))
+                            distanceUtils.calculateDistance(coords, Coordinates.fromHospital(hospital))
                     );
                 })
                 .min(Comparator.comparingDouble(AbstractMap.SimpleEntry::getValue))

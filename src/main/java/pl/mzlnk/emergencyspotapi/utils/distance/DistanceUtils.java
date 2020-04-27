@@ -6,7 +6,7 @@ public class DistanceUtils {
 
     private static final double R = 6371D;
 
-    public static double calculateDistance(Coordinates c1, Coordinates c2) {
+    public double calculateDistance(Coordinates c1, Coordinates c2) {
         double dLatitude = Math.abs(c1.latitude() - c2.latitude());
         double dLongitude = Math.abs(c1.longitude() - c2.longitude());
 
