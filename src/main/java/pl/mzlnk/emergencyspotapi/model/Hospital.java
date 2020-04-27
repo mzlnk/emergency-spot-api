@@ -1,8 +1,6 @@
 package pl.mzlnk.emergencyspotapi.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
@@ -10,6 +8,7 @@ import java.util.List;
 @Getter
 @Entity
 @Builder
+@NoArgsConstructor
 @Table(name = "hospitals")
 public class Hospital {
 

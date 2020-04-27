@@ -2,12 +2,14 @@ package pl.mzlnk.emergencyspotapi.model;
 
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Entity
 @Getter
 @Builder
+@NoArgsConstructor
 @Table(name = "hospital_reviews")
 public class HospitalReview {
 

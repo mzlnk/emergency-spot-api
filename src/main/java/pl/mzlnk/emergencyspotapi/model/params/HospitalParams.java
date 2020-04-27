@@ -19,7 +19,7 @@ public class HospitalParams {
     public final String city;
 
     @Singular
-    public final List<HospitalWardTypeEnum> wards = new ArrayList<>();
+    public final List<HospitalWardTypeEnum> wards;
 
     public final Example<Hospital> toExample() {
         return Example.of(

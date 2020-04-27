@@ -9,8 +9,13 @@ import pl.mzlnk.emergencyspotapi.model.HospitalWardTypeEnum;
 public class HospitalWardParams {
 
     public final HospitalWardTypeEnum wardType;
+
+    @Builder.Default
     public final Integer minCapacity = 0;
+
+    @Builder.Default
     public final Integer maxCapacity = Integer.MAX_VALUE;
+
     public final Long hospitalId;
 
     public final Example<HospitalWard> toExample() {
