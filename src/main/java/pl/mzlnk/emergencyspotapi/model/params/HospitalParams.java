@@ -28,8 +28,8 @@ public class HospitalParams {
                         .name(this.name)
                         .longitude(this.longitude)
                         .latitude(this.latitude)
-                        .country(this.country)
-                        .city(this.city)
+                        //.country(this.country)
+                        //.city(this.city)
                         .build()
         );
     }

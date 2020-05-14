@@ -19,7 +19,7 @@ public class HospitalReviewParams {
         return Example.of(
                 HospitalReview
                         .builder()
-                        .hospitalId(this.hospitalId)
+                        // .hospitalId(this.hospitalId)
                         .build()
         );
     }

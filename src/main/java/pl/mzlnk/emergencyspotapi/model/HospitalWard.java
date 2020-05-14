@@ -1,25 +1,20 @@
 package pl.mzlnk.emergencyspotapi.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Getter
 @Entity
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "hospital_wards")
-public class HospitalWard {
-
-    @Id
-    @GeneratedValue
-    @Column(name = "hospital_ward_id")
-    private Long id;
+@AttributeOverride(name = "id", column = @Column(name = "hospital_ward_id"))
+public class HospitalWard extends IdentifiableEntity {
 
     @Column(name = "ward_type")
     @Enumerated(EnumType.STRING)
@@ -28,12 +23,17 @@ public class HospitalWard {
     @Column(name = "capacity")
     private Long capacity;
 
-    @Column(name = "hospital_id")
-    private Long hospitalId;
-
     @ManyToOne
-    @JoinColumn(name = "hospital_id", insertable = false, updatable = false)
-    @JsonBackReference
     private Hospital hospital;
+
+    @OneToMany(mappedBy = "hospitalWard")
+    private List<HospitalReview> hospitalReviews;
+
+    @OneToMany(mappedBy = "hospitalWard")
+    private List<HospitalStay> hospitalStays;
+
+    public HospitalWard() {
+        super();
+    }
 
 }

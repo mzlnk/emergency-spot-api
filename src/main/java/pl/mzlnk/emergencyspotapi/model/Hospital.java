@@ -1,8 +1,9 @@
 package pl.mzlnk.emergencyspotapi.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.List;
@@ -10,15 +11,10 @@ import java.util.List;
 @Getter
 @Entity
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
+@AttributeOverride(name = "id", column = @Column(name = "hospital_id"))
 @Table(name = "hospitals")
-public class Hospital {
-
-    @Id
-    @GeneratedValue
-    @Column(name = "hospital_id")
-    private Long id;
+public class Hospital extends IdentifiableEntity {
 
     @Column(name = "name")
     private String name;
@@ -32,26 +28,14 @@ public class Hospital {
     @Column(name = "latitude")
     private Double latitude;
 
-    @Column(name = "country")
-    private String country;
-
-    @Column(name = "city")
-    private String city;
-
-    @Column(name = "street")
-    private String street;
-
-    @Column(name = "street_number")
-    private Integer streetNumber;
+    @Embedded
+    private Address address;
 
     @OneToMany(mappedBy = "hospital")
-    @JsonManagedReference
-    @JsonIgnoreProperties({"hospitalId"})
     private List<HospitalWard> wards;
 
-    @OneToMany(mappedBy = "hospital")
-    @JsonManagedReference
-    @JsonIgnoreProperties({"hospitalId"})
-    private List<HospitalReview> reviews;
+    public Hospital() {
+        super();
+    }
 
 }
