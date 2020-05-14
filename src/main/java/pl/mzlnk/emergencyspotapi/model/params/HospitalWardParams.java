@@ -7,7 +7,7 @@ import pl.mzlnk.emergencyspotapi.model.HospitalWard;
 import pl.mzlnk.emergencyspotapi.model.HospitalWardTypeEnum;
 
 @Builder
-public class HospitalWardParams {
+public class HospitalWardParams implements EntityParams<HospitalWard> {
 
     public final HospitalWardTypeEnum wardType;
 
@@ -19,6 +19,7 @@ public class HospitalWardParams {
 
     public final Long hospitalId;
 
+    @Override
     public final Example<HospitalWard> toExample() {
         return Example.of(
                 HospitalWard

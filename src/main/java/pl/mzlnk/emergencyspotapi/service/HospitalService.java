@@ -6,18 +6,8 @@ import pl.mzlnk.emergencyspotapi.model.params.HospitalParams;
 import java.util.List;
 import java.util.Optional;
 
-public interface HospitalService {
-
-    List<Hospital> findAll(HospitalParams params);
-
-    Optional<Hospital> findOne(Long id);
+public interface HospitalService extends EntityService<Hospital> {
 
     Optional<Hospital> findNearest(double longitude, double latitude);
-
-    void createOrUpdate(Hospital hospital);
-
-    void delete(Hospital hospital);
-
-    void deleteById(long id);
 
 }

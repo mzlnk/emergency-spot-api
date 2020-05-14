@@ -10,7 +10,7 @@ import pl.mzlnk.emergencyspotapi.model.HospitalWardTypeEnum;
 import java.util.List;
 
 @Builder
-public class HospitalParams {
+public class HospitalParams implements EntityParams<Hospital> {
 
     public final String name;
     public final Double longitude;
@@ -21,6 +21,7 @@ public class HospitalParams {
     @Singular
     public final List<HospitalWardTypeEnum> wards;
 
+    @Override
     public final Example<Hospital> toExample() {
         return Example.of(
                 Hospital

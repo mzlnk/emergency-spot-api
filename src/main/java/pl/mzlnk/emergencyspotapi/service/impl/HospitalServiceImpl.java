@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import pl.mzlnk.emergencyspotapi.model.Hospital;
 import pl.mzlnk.emergencyspotapi.model.HospitalWard;
 import pl.mzlnk.emergencyspotapi.model.HospitalWardTypeEnum;
+import pl.mzlnk.emergencyspotapi.model.params.EntityParams;
 import pl.mzlnk.emergencyspotapi.model.params.HospitalParams;
 import pl.mzlnk.emergencyspotapi.repository.HospitalRepository;
 import pl.mzlnk.emergencyspotapi.service.HospitalService;
@@ -23,17 +24,18 @@ public class HospitalServiceImpl implements HospitalService {
     private final DistanceUtils distanceUtils;
 
     @Override
-    public List<Hospital> findAll(HospitalParams params) {
+    public List<Hospital> findAll(EntityParams<Hospital> params) {
         List<Hospital> result = hospitalRepository.findAll(params.toExample());
 
-        if (!params.wards.isEmpty()) {
+        HospitalParams hospitalParams = (HospitalParams) params;
+        if (!hospitalParams.wards.isEmpty()) {
             result = result
                     .stream()
                     .filter(hospital ->
                             hospital.getWards()
                                     .stream()
                                     .map(HospitalWard::getWardType)
-                                    .anyMatch(params.wards::contains))
+                                    .anyMatch(hospitalParams.wards::contains))
                     .collect(Collectors.toList());
         }
 
@@ -71,7 +73,7 @@ public class HospitalServiceImpl implements HospitalService {
     }
 
     @Override
-    public void deleteById(long id) {
+    public void deleteById(Long id) {
         hospitalRepository.deleteById(id);
     }
 

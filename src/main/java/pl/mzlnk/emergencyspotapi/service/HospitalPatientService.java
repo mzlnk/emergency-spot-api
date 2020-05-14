@@ -1,4 +1,7 @@
 package pl.mzlnk.emergencyspotapi.service;
 
-public interface HospitalPatientService {
+import pl.mzlnk.emergencyspotapi.model.HospitalPatient;
+
+public interface HospitalPatientService extends EntityService<HospitalPatient> {
+
 }

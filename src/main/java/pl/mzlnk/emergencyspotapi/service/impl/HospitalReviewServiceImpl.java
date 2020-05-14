@@ -3,6 +3,7 @@ package pl.mzlnk.emergencyspotapi.service.impl;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import pl.mzlnk.emergencyspotapi.model.HospitalReview;
+import pl.mzlnk.emergencyspotapi.model.params.EntityParams;
 import pl.mzlnk.emergencyspotapi.model.params.HospitalReviewParams;
 import pl.mzlnk.emergencyspotapi.repository.HospitalReviewRepository;
 import pl.mzlnk.emergencyspotapi.service.HospitalReviewService;
@@ -18,12 +19,12 @@ public class HospitalReviewServiceImpl implements HospitalReviewService {
     private final HospitalReviewRepository hospitalReviewRepository;
 
     @Override
-    public List<HospitalReview> findAll(HospitalReviewParams params) {
+    public List<HospitalReview> findAll(EntityParams<HospitalReview> params) {
         return hospitalReviewRepository
                 .findAll(params.toExample())
                 .stream()
-                .filter(review -> review.getRating() > params.minRating)
-                .filter(review -> review.getRating() < params.maxRating)
+                .filter(review -> review.getRating() > ((HospitalReviewParams) params).minRating)
+                .filter(review -> review.getRating() < ((HospitalReviewParams) params).maxRating)
                 .collect(Collectors.toList());
     }
 
@@ -43,7 +44,7 @@ public class HospitalReviewServiceImpl implements HospitalReviewService {
     }
 
     @Override
-    public void deleteById(long id) {
+    public void deleteById(Long id) {
         hospitalReviewRepository.deleteById(id);
     }
 

@@ -7,7 +7,7 @@ import pl.mzlnk.emergencyspotapi.model.HospitalReview;
 import pl.mzlnk.emergencyspotapi.model.HospitalWard;
 
 @Builder
-public class HospitalReviewParams {
+public class HospitalReviewParams implements EntityParams<HospitalReview> {
 
     @Builder.Default
     public final Double minRating = 0D;
@@ -17,6 +17,7 @@ public class HospitalReviewParams {
 
     public final Long hospitalId;
 
+    @Override
     public final Example<HospitalReview> toExample() {
         return Example.of(
                 HospitalReview

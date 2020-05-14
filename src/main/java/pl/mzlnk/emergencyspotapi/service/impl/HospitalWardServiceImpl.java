@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.springframework.stereotype.Service;
 import pl.mzlnk.emergencyspotapi.model.HospitalWard;
+import pl.mzlnk.emergencyspotapi.model.params.EntityParams;
 import pl.mzlnk.emergencyspotapi.model.params.HospitalWardParams;
 import pl.mzlnk.emergencyspotapi.repository.HospitalWardRepository;
 import pl.mzlnk.emergencyspotapi.service.HospitalWardService;
@@ -20,12 +21,12 @@ public class HospitalWardServiceImpl implements HospitalWardService {
     private final Logger logger;
 
     @Override
-    public List<HospitalWard> findAll(HospitalWardParams params) {
+    public List<HospitalWard> findAll(EntityParams<HospitalWard> params) {
         return hospitalWardRepository
                 .findAll(params.toExample())
                 .stream()
-                .filter(ward -> ward.getCapacity() >= params.minCapacity)
-                .filter(ward -> ward.getCapacity() <= params.maxCapacity)
+                .filter(ward -> ward.getCapacity() >= ((HospitalWardParams) params).minCapacity)
+                .filter(ward -> ward.getCapacity() <= ((HospitalWardParams) params).maxCapacity)
                 .collect(Collectors.toList());
     }
 
@@ -45,7 +46,7 @@ public class HospitalWardServiceImpl implements HospitalWardService {
     }
 
     @Override
-    public void deleteById(long id) {
+    public void deleteById(Long id) {
         hospitalWardRepository.deleteById(id);
     }
 
