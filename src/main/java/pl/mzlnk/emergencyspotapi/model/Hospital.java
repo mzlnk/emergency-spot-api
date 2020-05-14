@@ -1,15 +1,17 @@
 package pl.mzlnk.emergencyspotapi.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.Getter;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
 import java.util.List;
 
-@Getter
+@Data
 @Entity
 @SuperBuilder
 @AllArgsConstructor
@@ -30,11 +32,10 @@ public class Hospital extends IdentifiableEntity {
     private Double latitude;
 
     @Embedded
-    @JsonManagedReference
     private Address address;
 
     @OneToMany(mappedBy = "hospital")
-    @JsonIgnoreProperties({"hospital", "hospitalReviews", "hospitalStays"})
+    @JsonBackReference
     private List<HospitalWard> wards;
 
     public Hospital() {

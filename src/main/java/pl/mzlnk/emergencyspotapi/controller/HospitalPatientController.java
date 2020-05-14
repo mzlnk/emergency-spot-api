@@ -3,9 +3,11 @@ package pl.mzlnk.emergencyspotapi.controller;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import pl.mzlnk.emergencyspotapi.model.HospitalPatient;
+import pl.mzlnk.emergencyspotapi.model.HospitalStay;
 import pl.mzlnk.emergencyspotapi.model.params.HospitalPatientParams;
 import pl.mzlnk.emergencyspotapi.service.HospitalPatientService;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,18 +36,21 @@ public class HospitalPatientController {
         return hospitalPatientService.findOne(id);
     }
 
-    @PostMapping
-    public void createHospital(@RequestBody HospitalPatient hospitalPatient) {
-        hospitalPatientService.createOrUpdate(hospitalPatient);
+    @GetMapping("/{id}/stays")
+    public List<HospitalStay> findHospitalStays(@PathVariable Long id) {
+        return hospitalPatientService
+                .findOne(id)
+                .map(HospitalPatient::getHospitalStays)
+                .orElse(new ArrayList<>());
     }
 
-    @PutMapping
-    public void updateHospital(@RequestBody HospitalPatient hospitalPatient) {
+    @PostMapping
+    public void createHospitalPatient(@RequestBody HospitalPatient hospitalPatient) {
         hospitalPatientService.createOrUpdate(hospitalPatient);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteHospital(@PathVariable Long id) {
+    public void deleteHospitalPatient(@PathVariable Long id) {
         hospitalPatientService.deleteById(id);
     }
 

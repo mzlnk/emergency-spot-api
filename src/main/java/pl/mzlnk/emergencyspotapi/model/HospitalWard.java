@@ -5,13 +5,14 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.Getter;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
 import java.util.List;
 
-@Getter
+@Data
 @Entity
 @SuperBuilder
 @AllArgsConstructor
@@ -27,15 +28,15 @@ public class HospitalWard extends IdentifiableEntity {
     private Long capacity;
 
     @ManyToOne
-    @JsonIgnoreProperties({"wards"})
+    @JsonBackReference
     private Hospital hospital;
 
     @OneToMany(mappedBy = "hospitalWard")
-    @JsonIgnoreProperties({"hospitalWard"})
+    @JsonBackReference
     private List<HospitalReview> hospitalReviews;
 
     @OneToMany(mappedBy = "hospitalWard")
-    @JsonIgnoreProperties({"hospitalWard"})
+    @JsonBackReference
     private List<HospitalStay> hospitalStays;
 
     public HospitalWard() {

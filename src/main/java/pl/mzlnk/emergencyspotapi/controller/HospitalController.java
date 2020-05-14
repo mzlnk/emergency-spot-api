@@ -1,8 +1,11 @@
 package pl.mzlnk.emergencyspotapi.controller;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import pl.mzlnk.emergencyspotapi.model.Hospital;
+import pl.mzlnk.emergencyspotapi.model.HospitalStay;
+import pl.mzlnk.emergencyspotapi.model.HospitalWard;
 import pl.mzlnk.emergencyspotapi.model.HospitalWardTypeEnum;
 import pl.mzlnk.emergencyspotapi.model.params.HospitalParams;
 import pl.mzlnk.emergencyspotapi.service.HospitalService;
@@ -26,6 +29,7 @@ public class HospitalController {
                                   @RequestParam(required = false) String city,
                                   @RequestParam(required = false) List<HospitalWardTypeEnum> wards) {
 
+
         return hospitalService
                 .findAll(
                         HospitalParams
@@ -45,6 +49,14 @@ public class HospitalController {
         return hospitalService.findOne(id);
     }
 
+    @GetMapping("/{id}/wards")
+    public List<HospitalWard> findHospitalWards(@PathVariable long id) {
+        return hospitalService
+                .findOne(id)
+                .map(Hospital::getWards)
+                .orElse(new ArrayList<>());
+    }
+
     @GetMapping("/nearest")
     public Optional<Hospital> findNearest(@RequestParam Double longitude,
                                           @RequestParam Double latitude) {
@@ -53,11 +65,6 @@ public class HospitalController {
 
     @PostMapping
     public void createHospital(@RequestBody Hospital hospital) {
-        hospitalService.createOrUpdate(hospital);
-    }
-
-    @PutMapping
-    public void updateHospital(@RequestBody Hospital hospital) {
         hospitalService.createOrUpdate(hospital);
     }
 

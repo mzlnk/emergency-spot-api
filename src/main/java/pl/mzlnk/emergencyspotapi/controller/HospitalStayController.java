@@ -8,6 +8,7 @@ import pl.mzlnk.emergencyspotapi.model.params.HospitalStayParams;
 import pl.mzlnk.emergencyspotapi.service.HospitalStayService;
 
 import java.time.LocalDate;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,8 +20,8 @@ public class HospitalStayController {
     private final HospitalStayService hospitalStayService;
 
     @GetMapping
-    public List<HospitalStay> findAll(@RequestParam(required = false, name = "date_from") @DateTimeFormat(pattern = "dd-MM-yyyy") LocalDate dateFrom,
-                                      @RequestParam(required = false, name = "date_to") @DateTimeFormat(pattern = "dd-MM-yyyy") LocalDate dateTo) {
+    public List<HospitalStay> findAll(@RequestParam(required = false, name = "date_from") @DateTimeFormat(pattern = "dd-MM-yyyy") Calendar dateFrom,
+                                      @RequestParam(required = false, name = "date_to") @DateTimeFormat(pattern = "dd-MM-yyyy") Calendar dateTo) {
         return hospitalStayService
                 .findAll(
                         HospitalStayParams

@@ -1,5 +1,6 @@
 package pl.mzlnk.emergencyspotapi.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
@@ -25,7 +26,7 @@ public class HospitalPatient extends IdentifiableEntity {
     private String lastName;
 
     @OneToMany(mappedBy = "hospitalPatient")
-    @JsonIgnoreProperties({"hospitalPatient"})
+    @JsonBackReference
     private List<HospitalStay> hospitalStays;
 
     public HospitalPatient() {

@@ -1,6 +1,7 @@
 package pl.mzlnk.emergencyspotapi.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,7 +14,7 @@ import java.util.Calendar;
 
 @Getter
 @Entity
-@SuperBuilder
+@SuperBuilder(toBuilder = true)
 @AllArgsConstructor
 @Table(name = "hospital_stays")
 @AttributeOverride(name = "id", column = @Column(name = "hospital_stay_id"))
@@ -21,24 +22,26 @@ public class HospitalStay extends IdentifiableEntity {
 
     @Column(name = "date_from")
     @Temporal(TemporalType.DATE)
-    private LocalDate dateFrom;
+    @JsonFormat(pattern = "dd-MM-yyyy")
+    private Calendar dateFrom;
 
     @Column(name = "date_to")
     @Temporal(TemporalType.DATE)
-    private LocalDate dateTo;
+    @JsonFormat(pattern = "dd-MM-yyyy")
+    private Calendar dateTo;
 
     @OneToOne(mappedBy = "hospitalStay")
-    @JsonIgnoreProperties({"hospitalStay"})
+    @JsonBackReference
     private HospitalReview hospitalReview;
 
     @ManyToOne
     @JoinColumn(name = "hospital_patient_id", referencedColumnName = "hospital_patient_id")
-    @JsonIgnoreProperties({"hospitalStays"})
+    @JsonBackReference
     private HospitalPatient hospitalPatient;
 
     @ManyToOne
     @JoinColumn(name = "hospital_ward_id", referencedColumnName = "hospital_ward_id")
-    @JsonIgnoreProperties({"hospitalStays"})
+    @JsonBackReference
     private HospitalWard hospitalWard;
 
     public HospitalStay() {

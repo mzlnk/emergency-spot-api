@@ -21,12 +21,12 @@ public class HospitalReview extends IdentifiableEntity {
 
     @ManyToOne
     @JoinColumn(name = "hospital_ward_id", referencedColumnName = "hospital_ward_id")
-    @JsonIgnoreProperties({"hospitalReviews"})
+    @JsonBackReference
     private HospitalWard hospitalWard;
 
     @OneToOne
     @JoinColumn(name = "hospital_stay_id", referencedColumnName = "hospital_stay_id")
-    @JsonIgnoreProperties({"hospitalReviews"})
+    @JsonBackReference
     private HospitalStay hospitalStay;
 
     public HospitalReview() {
