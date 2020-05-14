@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Calendar;
 
 @Getter
@@ -20,11 +21,11 @@ public class HospitalStay extends IdentifiableEntity {
 
     @Column(name = "date_from")
     @Temporal(TemporalType.DATE)
-    private Calendar dateFrom;
+    private LocalDate dateFrom;
 
     @Column(name = "date_to")
     @Temporal(TemporalType.DATE)
-    private Calendar dateTo;
+    private LocalDate dateTo;
 
     @OneToOne(mappedBy = "hospitalStay")
     @JsonIgnoreProperties({"hospitalStay"})

@@ -4,17 +4,16 @@ import lombok.Builder;
 import org.springframework.data.domain.Example;
 import pl.mzlnk.emergencyspotapi.model.HospitalStay;
 
-import java.util.Calendar;
-import java.util.GregorianCalendar;
+import java.time.LocalDate;
 
 @Builder
 public class HospitalStayParams implements EntityParams<HospitalStay> {
 
     @Builder.Default
-    public final Calendar dateFrom = new GregorianCalendar(1980, Calendar.JANUARY, 1);
+    public final LocalDate dateFrom = LocalDate.of(1980, 1, 1);
 
     @Builder.Default
-    public final Calendar dateTo = new GregorianCalendar(2100, Calendar.JANUARY, 1);
+    public final LocalDate dateTo = LocalDate.of(2100, 1, 1);
 
     @Override
     public Example<HospitalStay> toExample() {
