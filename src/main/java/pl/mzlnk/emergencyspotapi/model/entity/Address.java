@@ -1,4 +1,4 @@
-package pl.mzlnk.emergencyspotapi.model;
+package pl.mzlnk.emergencyspotapi.model.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

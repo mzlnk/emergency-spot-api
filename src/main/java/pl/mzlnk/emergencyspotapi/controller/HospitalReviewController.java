@@ -2,7 +2,7 @@ package pl.mzlnk.emergencyspotapi.controller;
 
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import pl.mzlnk.emergencyspotapi.model.HospitalReview;
+import pl.mzlnk.emergencyspotapi.model.entity.HospitalReview;
 import pl.mzlnk.emergencyspotapi.model.params.HospitalReviewParams;
 import pl.mzlnk.emergencyspotapi.service.HospitalReviewService;
 

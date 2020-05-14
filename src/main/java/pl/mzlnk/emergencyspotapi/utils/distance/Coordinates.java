@@ -1,7 +1,7 @@
 package pl.mzlnk.emergencyspotapi.utils.distance;
 
 import lombok.AllArgsConstructor;
-import pl.mzlnk.emergencyspotapi.model.Hospital;
+import pl.mzlnk.emergencyspotapi.model.entity.Hospital;
 
 @AllArgsConstructor
 public final class Coordinates {

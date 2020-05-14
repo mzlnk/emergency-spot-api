@@ -3,11 +3,10 @@ package pl.mzlnk.emergencyspotapi.controller;
 import lombok.AllArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
-import pl.mzlnk.emergencyspotapi.model.HospitalStay;
+import pl.mzlnk.emergencyspotapi.model.entity.HospitalStay;
 import pl.mzlnk.emergencyspotapi.model.params.HospitalStayParams;
 import pl.mzlnk.emergencyspotapi.service.HospitalStayService;
 
-import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Optional;

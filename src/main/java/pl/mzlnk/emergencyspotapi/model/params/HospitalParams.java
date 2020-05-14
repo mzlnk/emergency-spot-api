@@ -3,9 +3,9 @@ package pl.mzlnk.emergencyspotapi.model.params;
 import lombok.Builder;
 import lombok.Singular;
 import org.springframework.data.domain.Example;
-import pl.mzlnk.emergencyspotapi.model.Address;
-import pl.mzlnk.emergencyspotapi.model.Hospital;
-import pl.mzlnk.emergencyspotapi.model.HospitalWardTypeEnum;
+import pl.mzlnk.emergencyspotapi.model.entity.Address;
+import pl.mzlnk.emergencyspotapi.model.entity.Hospital;
+import pl.mzlnk.emergencyspotapi.model.entity.HospitalWardTypeEnum;
 
 import java.util.List;
 

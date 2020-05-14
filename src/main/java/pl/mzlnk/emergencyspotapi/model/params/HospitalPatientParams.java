@@ -2,7 +2,7 @@ package pl.mzlnk.emergencyspotapi.model.params;
 
 import lombok.Builder;
 import org.springframework.data.domain.Example;
-import pl.mzlnk.emergencyspotapi.model.HospitalPatient;
+import pl.mzlnk.emergencyspotapi.model.entity.HospitalPatient;
 
 @Builder
 public class HospitalPatientParams implements EntityParams<HospitalPatient> {

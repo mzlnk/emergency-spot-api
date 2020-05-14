@@ -1,4 +1,4 @@
-package pl.mzlnk.emergencyspotapi.model;
+package pl.mzlnk.emergencyspotapi.model.entity;
 
 import lombok.Getter;
 import lombok.experimental.SuperBuilder;

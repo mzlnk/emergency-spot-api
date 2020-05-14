@@ -2,9 +2,9 @@ package pl.mzlnk.emergencyspotapi.model.params;
 
 import lombok.Builder;
 import org.springframework.data.domain.Example;
-import pl.mzlnk.emergencyspotapi.model.Hospital;
-import pl.mzlnk.emergencyspotapi.model.HospitalWard;
-import pl.mzlnk.emergencyspotapi.model.HospitalWardTypeEnum;
+import pl.mzlnk.emergencyspotapi.model.entity.Hospital;
+import pl.mzlnk.emergencyspotapi.model.entity.HospitalWard;
+import pl.mzlnk.emergencyspotapi.model.entity.HospitalWardTypeEnum;
 
 @Builder
 public class HospitalWardParams implements EntityParams<HospitalWard> {

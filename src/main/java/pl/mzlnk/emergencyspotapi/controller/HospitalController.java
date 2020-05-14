@@ -1,12 +1,10 @@
 package pl.mzlnk.emergencyspotapi.controller;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import pl.mzlnk.emergencyspotapi.model.Hospital;
-import pl.mzlnk.emergencyspotapi.model.HospitalStay;
-import pl.mzlnk.emergencyspotapi.model.HospitalWard;
-import pl.mzlnk.emergencyspotapi.model.HospitalWardTypeEnum;
+import pl.mzlnk.emergencyspotapi.model.entity.Hospital;
+import pl.mzlnk.emergencyspotapi.model.entity.HospitalWard;
+import pl.mzlnk.emergencyspotapi.model.entity.HospitalWardTypeEnum;
 import pl.mzlnk.emergencyspotapi.model.params.HospitalParams;
 import pl.mzlnk.emergencyspotapi.service.HospitalService;
 

@@ -2,7 +2,7 @@ package pl.mzlnk.emergencyspotapi.model.params;
 
 import lombok.Builder;
 import org.springframework.data.domain.Example;
-import pl.mzlnk.emergencyspotapi.model.HospitalStay;
+import pl.mzlnk.emergencyspotapi.model.entity.HospitalStay;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;

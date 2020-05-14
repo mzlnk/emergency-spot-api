@@ -1,4 +1,4 @@
-package pl.mzlnk.emergencyspotapi.model;
+package pl.mzlnk.emergencyspotapi.model.entity;
 
 public enum HospitalWardTypeEnum {
 

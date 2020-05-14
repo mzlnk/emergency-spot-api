@@ -2,7 +2,7 @@ package pl.mzlnk.emergencyspotapi.model.params;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.data.domain.Example;
-import pl.mzlnk.emergencyspotapi.model.HospitalWard;
+import pl.mzlnk.emergencyspotapi.model.entity.HospitalWard;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;

@@ -1,7 +1,6 @@
-package pl.mzlnk.emergencyspotapi.model;
+package pl.mzlnk.emergencyspotapi.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.experimental.SuperBuilder;

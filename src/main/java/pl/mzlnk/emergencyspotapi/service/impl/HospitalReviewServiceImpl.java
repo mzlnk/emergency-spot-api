@@ -2,7 +2,7 @@ package pl.mzlnk.emergencyspotapi.service.impl;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import pl.mzlnk.emergencyspotapi.model.HospitalReview;
+import pl.mzlnk.emergencyspotapi.model.entity.HospitalReview;
 import pl.mzlnk.emergencyspotapi.model.params.EntityParams;
 import pl.mzlnk.emergencyspotapi.model.params.HospitalReviewParams;
 import pl.mzlnk.emergencyspotapi.repository.HospitalReviewRepository;
