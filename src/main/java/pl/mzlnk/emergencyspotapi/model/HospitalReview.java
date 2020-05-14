@@ -1,15 +1,16 @@
 package pl.mzlnk.emergencyspotapi.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
 
 @Entity
 @Getter
-@Builder
+@SuperBuilder
 @AllArgsConstructor
 @Table(name = "hospital_reviews")
 @AttributeOverride(name = "id", column = @Column(name = "hospital_review_id"))
@@ -20,10 +21,12 @@ public class HospitalReview extends IdentifiableEntity {
 
     @ManyToOne
     @JoinColumn(name = "hospital_ward_id", referencedColumnName = "hospital_ward_id")
+    @JsonIgnoreProperties({"hospitalReviews"})
     private HospitalWard hospitalWard;
 
     @OneToOne
     @JoinColumn(name = "hospital_stay_id", referencedColumnName = "hospital_stay_id")
+    @JsonIgnoreProperties({"hospitalReviews"})
     private HospitalStay hospitalStay;
 
     public HospitalReview() {

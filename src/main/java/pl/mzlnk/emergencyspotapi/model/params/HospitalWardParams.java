@@ -2,6 +2,7 @@ package pl.mzlnk.emergencyspotapi.model.params;
 
 import lombok.Builder;
 import org.springframework.data.domain.Example;
+import pl.mzlnk.emergencyspotapi.model.Hospital;
 import pl.mzlnk.emergencyspotapi.model.HospitalWard;
 import pl.mzlnk.emergencyspotapi.model.HospitalWardTypeEnum;
 
@@ -21,10 +22,14 @@ public class HospitalWardParams {
     public final Example<HospitalWard> toExample() {
         return Example.of(
                 HospitalWard
-                .builder()
-                .wardType(this.wardType)
-                        //.hospitalId(this.hospitalId)
-                .build()
+                        .builder()
+                        .wardType(this.wardType)
+                        .hospital(Hospital
+                                .builder()
+                                .id(this.hospitalId)
+                                .build()
+                        )
+                        .build()
         );
     }
 

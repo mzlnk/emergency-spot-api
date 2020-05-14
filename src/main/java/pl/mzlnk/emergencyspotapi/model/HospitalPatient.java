@@ -1,12 +1,18 @@
 package pl.mzlnk.emergencyspotapi.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
 import java.util.List;
 
+@Getter
 @Entity
+@SuperBuilder
 @AllArgsConstructor
 @Table(name = "hospital_patients")
 @AttributeOverride(name = "id", column = @Column(name = "hospital_patient_id"))
@@ -19,6 +25,7 @@ public class HospitalPatient extends IdentifiableEntity {
     private String lastName;
 
     @OneToMany(mappedBy = "hospitalPatient")
+    @JsonIgnoreProperties({"hospitalPatient"})
     private List<HospitalStay> hospitalStays;
 
     public HospitalPatient() {

@@ -2,7 +2,9 @@ package pl.mzlnk.emergencyspotapi.model.params;
 
 import lombok.Builder;
 import org.springframework.data.domain.Example;
+import pl.mzlnk.emergencyspotapi.model.Hospital;
 import pl.mzlnk.emergencyspotapi.model.HospitalReview;
+import pl.mzlnk.emergencyspotapi.model.HospitalWard;
 
 @Builder
 public class HospitalReviewParams {
@@ -19,7 +21,17 @@ public class HospitalReviewParams {
         return Example.of(
                 HospitalReview
                         .builder()
-                        // .hospitalId(this.hospitalId)
+                        .hospitalWard(
+                                HospitalWard
+                                        .builder()
+                                        .hospital(
+                                                Hospital
+                                                        .builder()
+                                                        .id(this.hospitalId)
+                                                        .build()
+                                        )
+                                .build()
+                        )
                         .build()
         );
     }
