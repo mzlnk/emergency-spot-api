@@ -2,6 +2,8 @@ package pl.mzlnk.emergencyspotapi.service.impl;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import pl.mzlnk.emergencyspotapi.model.dto.hospital.AddressDto;
+import pl.mzlnk.emergencyspotapi.model.dto.hospital.HospitalDto;
 import pl.mzlnk.emergencyspotapi.model.entity.Hospital;
 import pl.mzlnk.emergencyspotapi.model.entity.HospitalWard;
 import pl.mzlnk.emergencyspotapi.model.params.EntityParams;
@@ -23,7 +25,7 @@ public class HospitalServiceImpl implements HospitalService {
     private final DistanceUtils distanceUtils;
 
     @Override
-    public List<Hospital> findAll(EntityParams<Hospital> params) {
+    public List<HospitalDto> findAll(EntityParams<Hospital> params) {
         List<Hospital> result = hospitalRepository.findAll(params.toExample());
 
         HospitalParams hospitalParams = (HospitalParams) params;
@@ -38,16 +40,21 @@ public class HospitalServiceImpl implements HospitalService {
                     .collect(Collectors.toList());
         }
 
-        return result;
+        return result
+                .stream()
+                .map(HospitalDto::new)
+                .collect(Collectors.toList());
     }
 
     @Override
-    public Optional<Hospital> findOne(Long id) {
-        return hospitalRepository.findById(id);
+    public Optional<HospitalDto> findOne(Long id) {
+        return hospitalRepository
+                .findById(id)
+                .map(HospitalDto::new);
     }
 
     @Override
-    public Optional<Hospital> findNearest(double longitude, double latitude) {
+    public Optional<HospitalDto> findNearest(double longitude, double latitude) {
         Coordinates coords = new Coordinates(longitude, latitude);
 
         return StreamSupport.stream(hospitalRepository.findAll().spliterator(), true)
@@ -58,17 +65,18 @@ public class HospitalServiceImpl implements HospitalService {
                     );
                 })
                 .min(Comparator.comparingDouble(AbstractMap.SimpleEntry::getValue))
-                .map(Map.Entry::getKey);
+                .map(Map.Entry::getKey)
+                .map(HospitalDto::new);
     }
 
     @Override
-    public void createOrUpdate(Hospital hospital) {
-        hospitalRepository.save(hospital);
+    public void createOrUpdate(HospitalDto hospital) {
+        // todo: code here
     }
 
     @Override
-    public void delete(Hospital hospital) {
-        hospitalRepository.delete(hospital);
+    public void delete(HospitalDto hospital) {
+        // todo: code here
     }
 
     @Override

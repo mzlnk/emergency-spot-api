@@ -22,12 +22,24 @@ public class HospitalPatient extends IdentifiableEntity {
     @Column(name = "last_name")
     private String lastName;
 
+    @Column(name = "pesel")
+    private String pesel;
+
+    @OneToOne(mappedBy = "hospitalPatient")
+    private User user;
+
     @OneToMany(mappedBy = "hospitalPatient")
     @JsonBackReference
     private List<HospitalStay> hospitalStays;
 
     public HospitalPatient() {
         super();
+    }
+
+    public HospitalPatient(String firstName, String lastName, String pesel) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.pesel = pesel;
     }
 
 }

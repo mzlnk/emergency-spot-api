@@ -10,7 +10,7 @@
     </parent>
     <groupId>pl.mzlnk</groupId>
     <artifactId>emergency-spot-api</artifactId>
-    <version>0.0.7-SNAPSHOT</version>
+    <version>0.0.8</version>
     <name>emergency-spot-api</name>
     <description>Backend server with REST API provided for EmergencySpot App.</description>
 

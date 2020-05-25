@@ -26,4 +26,8 @@ public class User extends IdentifiableEntity {
             inverseJoinColumns = {@JoinColumn(name = "roles_role_id")})
     private Set<Role> roles;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "hospital_patient_id", referencedColumnName = "hospital_patient_id")
+    private HospitalPatient hospitalPatient;
+
 }

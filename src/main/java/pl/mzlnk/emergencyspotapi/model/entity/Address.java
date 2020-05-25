@@ -25,6 +25,6 @@ public class Address {
     private String street;
 
     @Column(name = "street_number")
-    private String streetNumber;
+    private Long streetNumber;
 
 }

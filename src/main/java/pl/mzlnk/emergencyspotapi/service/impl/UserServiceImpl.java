@@ -1,7 +1,6 @@
 package pl.mzlnk.emergencyspotapi.service.impl;
 
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -9,20 +8,21 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import pl.mzlnk.emergencyspotapi.model.dto.UserDto;
+import pl.mzlnk.emergencyspotapi.model.entity.HospitalPatient;
+import pl.mzlnk.emergencyspotapi.model.entity.Role;
 import pl.mzlnk.emergencyspotapi.model.entity.User;
+import pl.mzlnk.emergencyspotapi.repository.RoleRepository;
 import pl.mzlnk.emergencyspotapi.repository.UserRepository;
 import pl.mzlnk.emergencyspotapi.service.UserService;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @AllArgsConstructor
 @Service("userService")
 public class UserServiceImpl implements UserDetailsService, UserService {
 
     private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
@@ -46,13 +46,24 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     }
 
     @Override
-    public void create(UserDto userDto) {
+    public User create(UserDto userDto) {
         User user = new User();
+
+        Role userRole = roleRepository.findById(2L).orElse(null);
 
         user.setUsername(userDto.getUsername());
         user.setPassword(bCryptPasswordEncoder.encode(userDto.getPassword()));
+        user.setHospitalPatient(
+                new HospitalPatient(
+                        userDto.getFirstName(),
+                        userDto.getLastName(),
+                        userDto.getPesel()
+                )
+        );
 
-        userRepository.save(user);
+        user.setRoles(Collections.singleton(userRole));
+
+        return userRepository.save(user);
     }
 
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

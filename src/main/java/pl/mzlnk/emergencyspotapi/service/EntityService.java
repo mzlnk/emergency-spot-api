@@ -5,15 +5,15 @@ import pl.mzlnk.emergencyspotapi.model.params.EntityParams;
 import java.util.List;
 import java.util.Optional;
 
-public interface EntityService<E> {
+public interface EntityService<R, E> {
 
-    List<E> findAll(EntityParams<E> params);
+    List<R> findAll(EntityParams<E> params);
 
-    Optional<E> findOne(Long id);
+    Optional<R> findOne(Long id);
 
-    void createOrUpdate(E entity);
+    void createOrUpdate(R entity);
 
-    void delete(E entity);
+    void delete(R entity);
 
     void deleteById(Long id);
 

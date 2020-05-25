@@ -1,7 +1,7 @@
 package pl.mzlnk.emergencyspotapi.model.dto.hospital;
 
 import lombok.Data;
-import pl.mzlnk.emergencyspotapi.model.dto.hospitalward.HospitalWardEnum;
+import pl.mzlnk.emergencyspotapi.model.entity.HospitalWardTypeEnum;
 
 import java.util.List;
 
@@ -13,6 +13,6 @@ public class HospitalParamsDto {
     private Double latitude;
     private String country;
     private String city;
-    private List<HospitalWardEnum> wards;
+    private List<HospitalWardTypeEnum> wards;
 
 }

@@ -2,6 +2,7 @@ package pl.mzlnk.emergencyspotapi.controller;
 
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import pl.mzlnk.emergencyspotapi.model.dto.hospital.HospitalDto;
 import pl.mzlnk.emergencyspotapi.model.entity.Hospital;
 import pl.mzlnk.emergencyspotapi.model.entity.HospitalWard;
 import pl.mzlnk.emergencyspotapi.model.entity.HospitalWardTypeEnum;
@@ -20,12 +21,12 @@ public class HospitalController {
     private final HospitalService hospitalService;
 
     @GetMapping
-    public List<Hospital> findAll(@RequestParam(required = false) String name,
-                                  @RequestParam(required = false) Double longitude,
-                                  @RequestParam(required = false) Double latitude,
-                                  @RequestParam(required = false) String country,
-                                  @RequestParam(required = false) String city,
-                                  @RequestParam(required = false) List<HospitalWardTypeEnum> wards) {
+    public List<HospitalDto> findAll(@RequestParam(required = false) String name,
+                                     @RequestParam(required = false) Double longitude,
+                                     @RequestParam(required = false) Double latitude,
+                                     @RequestParam(required = false) String country,
+                                     @RequestParam(required = false) String city,
+                                     @RequestParam(required = false) List<HospitalWardTypeEnum> wards) {
 
 
         return hospitalService
@@ -43,27 +44,29 @@ public class HospitalController {
     }
 
     @GetMapping("/{id}")
-    public Optional<Hospital> findById(@PathVariable long id) {
+    public Optional<HospitalDto> findById(@PathVariable long id) {
         return hospitalService.findOne(id);
     }
 
     @GetMapping("/{id}/wards")
     public List<HospitalWard> findHospitalWards(@PathVariable long id) {
-        return hospitalService
-                .findOne(id)
-                .map(Hospital::getWards)
-                .orElse(new ArrayList<>());
+        return null;
+        //        return hospitalService
+//                .findOne(id)
+//                .map(Hospital::getWards)
+//                .orElse(new ArrayList<>());
     }
 
     @GetMapping("/nearest")
     public Optional<Hospital> findNearest(@RequestParam Double longitude,
                                           @RequestParam Double latitude) {
-        return hospitalService.findNearest(longitude, latitude);
+        return null;
+        // return hospitalService.findNearest(longitude, latitude);
     }
 
     @PostMapping
     public void createHospital(@RequestBody Hospital hospital) {
-        hospitalService.createOrUpdate(hospital);
+        // hospitalService.createOrUpdate(hospital);
     }
 
     @DeleteMapping("/{id}")
