@@ -1,0 +1,18 @@
+package pl.mzlnk.emergencyspotapi.model.dto.hospital;
+
+import lombok.Data;
+import pl.mzlnk.emergencyspotapi.model.dto.hospitalward.HospitalWardEnum;
+
+import java.util.List;
+
+@Data
+public class HospitalParamsDto {
+
+    private String name;
+    private Double longitude;
+    private Double latitude;
+    private String country;
+    private String city;
+    private List<HospitalWardEnum> wards;
+
+}
