@@ -2,13 +2,14 @@ package pl.mzlnk.emergencyspotapi.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.Getter;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
 
 @Entity
-@Getter
+@Data
 @SuperBuilder
 @AllArgsConstructor
 @Table(name = "hospital_reviews")

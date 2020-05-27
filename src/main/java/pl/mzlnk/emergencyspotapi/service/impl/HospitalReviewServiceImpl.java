@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import pl.mzlnk.emergencyspotapi.model.dto.hospitalreview.HospitalReviewDetailsDto;
 import pl.mzlnk.emergencyspotapi.model.dto.hospitalreview.HospitalReviewDto;
 import pl.mzlnk.emergencyspotapi.model.dto.hospitalreview.NewHospitalReviewDto;
+import pl.mzlnk.emergencyspotapi.model.dto.hospitalreview.UpdateHospitalReviewDto;
 import pl.mzlnk.emergencyspotapi.model.entity.HospitalReview;
 import pl.mzlnk.emergencyspotapi.model.params.EntityParams;
 import pl.mzlnk.emergencyspotapi.model.params.HospitalReviewParams;
@@ -51,6 +52,20 @@ public class HospitalReviewServiceImpl implements HospitalReviewService {
                                     .rating(dto.getRating())
                                     .build();
 
+                            hospitalReviewRepository.save(hospitalReview);
+                        },
+                        () -> {
+                            throw new EntityNotFoundException();
+                        }
+                );
+    }
+
+    @Override
+    public void update(UpdateHospitalReviewDto dto) {
+        hospitalReviewRepository.findById(dto.getHospitalReviewId())
+                .ifPresentOrElse(
+                        hospitalReview -> {
+                            hospitalReview.setRating(dto.getNewRating());
                             hospitalReviewRepository.save(hospitalReview);
                         },
                         () -> {

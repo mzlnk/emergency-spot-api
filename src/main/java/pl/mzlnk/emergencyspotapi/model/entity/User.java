@@ -16,7 +16,6 @@ public class User extends IdentifiableEntity {
     private String username;
 
     @Column
-    @JsonIgnore
     private String password;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)

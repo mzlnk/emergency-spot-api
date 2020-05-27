@@ -1,5 +1,6 @@
 package pl.mzlnk.emergencyspotapi.model.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -12,6 +13,8 @@ public class UserDto {
     private String pesel;
 
     private String username;
+
+    @JsonIgnore
     private String password;
 
 }

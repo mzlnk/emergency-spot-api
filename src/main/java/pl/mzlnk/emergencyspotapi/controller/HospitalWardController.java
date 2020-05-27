@@ -1,19 +1,22 @@
 package pl.mzlnk.emergencyspotapi.controller;
 
 import lombok.AllArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
+import pl.mzlnk.emergencyspotapi.model.dto.hospitalreview.HospitalReviewDto;
+import pl.mzlnk.emergencyspotapi.model.dto.hospitalstay.HospitalStayDto;
+import pl.mzlnk.emergencyspotapi.model.dto.hospitalward.HospitalWardDetailsDto;
 import pl.mzlnk.emergencyspotapi.model.dto.hospitalward.HospitalWardDto;
-import pl.mzlnk.emergencyspotapi.model.entity.HospitalReview;
+import pl.mzlnk.emergencyspotapi.model.dto.hospitalward.NewHospitalWardDto;
 import pl.mzlnk.emergencyspotapi.model.entity.HospitalStay;
 import pl.mzlnk.emergencyspotapi.model.entity.HospitalWard;
 import pl.mzlnk.emergencyspotapi.model.entity.HospitalWardTypeEnum;
+import pl.mzlnk.emergencyspotapi.model.params.HospitalReviewParams;
+import pl.mzlnk.emergencyspotapi.model.params.HospitalStayParams;
 import pl.mzlnk.emergencyspotapi.model.params.HospitalWardParams;
-import pl.mzlnk.emergencyspotapi.service.HospitalService;
+import pl.mzlnk.emergencyspotapi.service.HospitalReviewService;
+import pl.mzlnk.emergencyspotapi.service.HospitalStayService;
 import pl.mzlnk.emergencyspotapi.service.HospitalWardService;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,7 +26,8 @@ import java.util.Optional;
 public class HospitalWardController {
 
     private final HospitalWardService hospitalWardService;
-    private final HospitalService hospitalService;
+    private final HospitalReviewService hospitalReviewService;
+    private final HospitalStayService hospitalStayService;
 
     @GetMapping
     public List<HospitalWardDto> findAll(@RequestParam(required = false, name = "ward") HospitalWardTypeEnum wardType,
@@ -44,44 +48,35 @@ public class HospitalWardController {
     }
 
     @GetMapping("/{id}")
-    public Optional<HospitalWardDto> findOne(@PathVariable Long id) {
+    public Optional<HospitalWardDetailsDto> findOne(@PathVariable Long id) {
         return hospitalWardService.findOne(id);
     }
 
     @GetMapping("/{id}/reviews")
-    public List<HospitalReview> findHospitalReviews(@PathVariable Long id) {
-        return null;
-        //        return hospitalWardService
-//                .findOne(id)
-//                .map(HospitalWard::getHospitalReviews)
-//                .orElse(new ArrayList<>());
+    public List<HospitalReviewDto> findHospitalReviews(@PathVariable Long id) {
+        return hospitalReviewService
+                .findAll(
+                        HospitalReviewParams
+                                .builder()
+                                .hospitalId(id)
+                                .build()
+                );
     }
 
     @GetMapping("/{id}/stays")
-    public List<HospitalStay> findHospitalStays(@PathVariable Long id) {
-        return null;
-//        return hospitalWardService
-//                .findOne(id)
-//                .map(HospitalWard::getHospitalStays)
-//                .orElse(new ArrayList<>());
+    public List<HospitalStayDto> findHospitalStays(@PathVariable Long id) {
+        return hospitalStayService
+                .findAll(
+                        HospitalStayParams
+                                .builder()
+                                .hospitalWardId(id)
+                                .build()
+                );
     }
 
     @PostMapping
-    public void createHospitalWard(@RequestBody HospitalWard hospitalWard) {
-//        hospitalService.findOne(hospitalWard.getHospital().getId())
-//                .ifPresentOrElse(
-//                        hospital -> {
-//                            hospitalWard.setHospital(hospital);
-//                            hospitalWardService.createOrUpdate(hospitalWard);
-//                        },
-//                        () -> {
-//                            throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, "Hospital with given ID not found");
-//                        });
-    }
-
-    @PutMapping
-    public void updateHospitalWard(@RequestBody HospitalWard hospitalWard) {
-        // hospitalWardService.createOrUpdate(hospitalWard);
+    public void createHospitalWard(@RequestBody NewHospitalWardDto hospitalWard) {
+        hospitalWardService.create(hospitalWard);
     }
 
     @DeleteMapping("/{id}")

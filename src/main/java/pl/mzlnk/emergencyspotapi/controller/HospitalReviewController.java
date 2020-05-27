@@ -2,6 +2,10 @@ package pl.mzlnk.emergencyspotapi.controller;
 
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import pl.mzlnk.emergencyspotapi.model.dto.hospitalreview.HospitalReviewDetailsDto;
+import pl.mzlnk.emergencyspotapi.model.dto.hospitalreview.HospitalReviewDto;
+import pl.mzlnk.emergencyspotapi.model.dto.hospitalreview.NewHospitalReviewDto;
+import pl.mzlnk.emergencyspotapi.model.dto.hospitalreview.UpdateHospitalReviewDto;
 import pl.mzlnk.emergencyspotapi.model.entity.HospitalReview;
 import pl.mzlnk.emergencyspotapi.model.params.HospitalReviewParams;
 import pl.mzlnk.emergencyspotapi.service.HospitalReviewService;
@@ -17,9 +21,9 @@ public class HospitalReviewController {
     private final HospitalReviewService hospitalReviewService;
 
     @GetMapping
-    public List<HospitalReview> findAll(@RequestParam(required = false, name = "min_rating") Double minRating,
-                                        @RequestParam(required = false, name = "max_rating") Double maxRating,
-                                        @RequestParam(required = false, name = "hospital") Long hospitalId) {
+    public List<HospitalReviewDto> findAll(@RequestParam(required = false, name = "min_rating") Double minRating,
+                                           @RequestParam(required = false, name = "max_rating") Double maxRating,
+                                           @RequestParam(required = false, name = "hospital") Long hospitalId) {
 
         return hospitalReviewService
                 .findAll(
@@ -33,18 +37,18 @@ public class HospitalReviewController {
     }
 
     @GetMapping("/{id}")
-    public Optional<HospitalReview> findOne(@PathVariable Long id) {
+    public Optional<HospitalReviewDetailsDto> findOne(@PathVariable Long id) {
         return hospitalReviewService.findOne(id);
     }
 
     @PostMapping
-    public void createReview(@RequestBody HospitalReview review) {
+    public void createReview(@RequestBody NewHospitalReviewDto review) {
         hospitalReviewService.create(review);
     }
 
     @PutMapping
-    public void updateReview(@RequestBody HospitalReview review) {
-        hospitalReviewService.create(review);
+    public void updateReview(@RequestBody UpdateHospitalReviewDto review) {
+        hospitalReviewService.update(review);
     }
 
     @DeleteMapping("/{id}")

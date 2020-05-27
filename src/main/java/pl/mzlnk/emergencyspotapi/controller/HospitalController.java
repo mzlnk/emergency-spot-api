@@ -5,11 +5,11 @@ import org.springframework.web.bind.annotation.*;
 import pl.mzlnk.emergencyspotapi.model.dto.hospital.HospitalDetailsDto;
 import pl.mzlnk.emergencyspotapi.model.dto.hospital.HospitalDto;
 import pl.mzlnk.emergencyspotapi.model.dto.hospitalward.HospitalWardDto;
-import pl.mzlnk.emergencyspotapi.model.entity.Hospital;
-import pl.mzlnk.emergencyspotapi.model.entity.HospitalWard;
 import pl.mzlnk.emergencyspotapi.model.entity.HospitalWardTypeEnum;
 import pl.mzlnk.emergencyspotapi.model.params.HospitalParams;
+import pl.mzlnk.emergencyspotapi.model.params.HospitalWardParams;
 import pl.mzlnk.emergencyspotapi.service.HospitalService;
+import pl.mzlnk.emergencyspotapi.service.HospitalWardService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +21,7 @@ import java.util.Optional;
 public class HospitalController {
 
     private final HospitalService hospitalService;
+    private final HospitalWardService hospitalWardService;
 
     @GetMapping
     public List<HospitalDto> findAll(@RequestParam(required = false) String name,
@@ -52,18 +53,19 @@ public class HospitalController {
 
     @GetMapping("/{id}/wards")
     public List<HospitalWardDto> findHospitalWards(@PathVariable long id) {
-        return null;
-        //        return hospitalService
-//                .findOne(id)
-//                .map(Hospital::getWards)
-//                .orElse(new ArrayList<>());
+        return hospitalWardService
+                .findAll(
+                        HospitalWardParams
+                                .builder()
+                                .hospitalId(id)
+                                .build()
+                );
     }
 
     @GetMapping("/nearest")
     public Optional<HospitalDetailsDto> findNearest(@RequestParam Double longitude,
-                                          @RequestParam Double latitude) {
-        return null;
-        // return hospitalService.findNearest(longitude, latitude);
+                                                    @RequestParam Double latitude) {
+        return hospitalService.findNearest(longitude, latitude);
     }
 
 }
