@@ -1,14 +1,11 @@
 package pl.mzlnk.emergencyspotapi.model.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
-@Getter
+@Data
 @Embeddable
 @Builder
 @NoArgsConstructor

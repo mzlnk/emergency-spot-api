@@ -38,12 +38,12 @@ public class HospitalStayController {
 
     @PostMapping
     public void createHospitalStay(@RequestBody HospitalStay hospitalStay) {
-        hospitalStayService.createOrUpdate(hospitalStay);
+        hospitalStayService.create(hospitalStay);
     }
 
     @PutMapping
     public void updateHospitalStay(@RequestBody HospitalStay hospitalStay) {
-        hospitalStayService.createOrUpdate(hospitalStay);
+        hospitalStayService.create(hospitalStay);
     }
 
     @DeleteMapping("/{id}")

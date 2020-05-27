@@ -39,4 +39,8 @@ public class Hospital extends IdentifiableEntity {
         super();
     }
 
+    public Hospital(String name, String description, Double longitude, Double latitude, Address address) {
+        this(name, description, longitude, latitude, address, null);
+    }
+
 }

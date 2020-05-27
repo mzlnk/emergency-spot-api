@@ -3,7 +3,10 @@ package pl.mzlnk.emergencyspotapi.service.impl;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import pl.mzlnk.emergencyspotapi.model.dto.hospital.AddressDto;
+import pl.mzlnk.emergencyspotapi.model.dto.hospital.HospitalDetailsDto;
 import pl.mzlnk.emergencyspotapi.model.dto.hospital.HospitalDto;
+import pl.mzlnk.emergencyspotapi.model.dto.hospital.NewHospitalDto;
+import pl.mzlnk.emergencyspotapi.model.entity.Address;
 import pl.mzlnk.emergencyspotapi.model.entity.Hospital;
 import pl.mzlnk.emergencyspotapi.model.entity.HospitalWard;
 import pl.mzlnk.emergencyspotapi.model.params.EntityParams;
@@ -42,22 +45,23 @@ public class HospitalServiceImpl implements HospitalService {
 
         return result
                 .stream()
-                .map(HospitalDto::new)
+                .map(HospitalDto::fromEntity)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public Optional<HospitalDto> findOne(Long id) {
+    public Optional<HospitalDetailsDto> findOne(Long id) {
         return hospitalRepository
                 .findById(id)
-                .map(HospitalDto::new);
+                .map(HospitalDetailsDto::fromEntity);
     }
 
     @Override
-    public Optional<HospitalDto> findNearest(double longitude, double latitude) {
+    public Optional<HospitalDetailsDto> findNearest(double longitude, double latitude) {
         Coordinates coords = new Coordinates(longitude, latitude);
 
-        return StreamSupport.stream(hospitalRepository.findAll().spliterator(), true)
+        return hospitalRepository.findAll()
+                .parallelStream()
                 .map(hospital -> {
                     return new AbstractMap.SimpleEntry<>(
                             hospital,
@@ -66,17 +70,27 @@ public class HospitalServiceImpl implements HospitalService {
                 })
                 .min(Comparator.comparingDouble(AbstractMap.SimpleEntry::getValue))
                 .map(Map.Entry::getKey)
-                .map(HospitalDto::new);
+                .map(HospitalDetailsDto::fromEntity);
     }
 
     @Override
-    public void createOrUpdate(HospitalDto hospital) {
-        // todo: code here
-    }
+    public void create(NewHospitalDto dto) {
+        Address address = Address.builder()
+                .country(dto.getAddress().getCountry())
+                .city(dto.getAddress().getCity())
+                .street(dto.getAddress().getStreet())
+                .streetNumber(dto.getAddress().getStreetNumber())
+                .build();
 
-    @Override
-    public void delete(HospitalDto hospital) {
-        // todo: code here
+        Hospital hospital = Hospital.builder()
+                .longitude(dto.getLongitude())
+                .latitude(dto.getLatitude())
+                .name(dto.getName())
+                .description(dto.getDescription())
+                .address(address)
+                .build();
+
+        this.hospitalRepository.save(hospital);
     }
 
     @Override

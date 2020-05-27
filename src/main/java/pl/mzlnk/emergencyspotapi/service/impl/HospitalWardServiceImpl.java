@@ -5,14 +5,19 @@ import org.slf4j.Logger;
 import org.springframework.stereotype.Service;
 import pl.mzlnk.emergencyspotapi.model.dto.hospital.AddressDto;
 import pl.mzlnk.emergencyspotapi.model.dto.hospital.HospitalDto;
+import pl.mzlnk.emergencyspotapi.model.dto.hospitalward.HospitalWardDetailsDto;
 import pl.mzlnk.emergencyspotapi.model.dto.hospitalward.HospitalWardDto;
+import pl.mzlnk.emergencyspotapi.model.dto.hospitalward.NewHospitalWardDto;
+import pl.mzlnk.emergencyspotapi.model.entity.Hospital;
 import pl.mzlnk.emergencyspotapi.model.entity.HospitalWard;
 import pl.mzlnk.emergencyspotapi.model.params.EntityParams;
 import pl.mzlnk.emergencyspotapi.model.params.HospitalWardParams;
+import pl.mzlnk.emergencyspotapi.repository.HospitalRepository;
 import pl.mzlnk.emergencyspotapi.repository.HospitalWardRepository;
 import pl.mzlnk.emergencyspotapi.service.HospitalService;
 import pl.mzlnk.emergencyspotapi.service.HospitalWardService;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -22,6 +27,7 @@ import java.util.stream.Collectors;
 public class HospitalWardServiceImpl implements HospitalWardService {
 
     private final HospitalWardRepository hospitalWardRepository;
+    private final HospitalRepository hospitalRepository;
     private final Logger logger;
 
     @Override
@@ -31,25 +37,34 @@ public class HospitalWardServiceImpl implements HospitalWardService {
                 .stream()
                 .filter(ward -> ward.getCapacity() >= ((HospitalWardParams) params).minCapacity)
                 .filter(ward -> ward.getCapacity() <= ((HospitalWardParams) params).maxCapacity)
-                .map(HospitalWardDto::new)
+                .map(HospitalWardDto::fromEntity)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public Optional<HospitalWardDto> findOne(Long id) {
+    public Optional<HospitalWardDetailsDto> findOne(Long id) {
         return hospitalWardRepository
                 .findById(id)
-                .map(HospitalWardDto::new);
+                .map(HospitalWardDetailsDto::fromEntity);
     }
 
     @Override
-    public void createOrUpdate(HospitalWardDto hospitalWard) {
-        // hospitalWardRepository.save(hospitalWard);
-    }
+    public void create(NewHospitalWardDto dto) {
+        hospitalRepository.findById(dto.getHospitalId())
+                .ifPresentOrElse(
+                        hospital -> {
+                            HospitalWard hospitalWard = HospitalWard.builder()
+                                    .wardType(dto.getWardType())
+                                    .capacity(dto.getCapacity())
+                                    .hospital(hospital)
+                                    .build();
 
-    @Override
-    public void delete(HospitalWardDto hospitalWard) {
-        // hospitalWardRepository.delete(hospitalWard);
+                            hospitalWardRepository.save(hospitalWard);
+                        },
+                        () -> {
+                            throw new EntityNotFoundException();
+                        }
+                );
     }
 
     @Override

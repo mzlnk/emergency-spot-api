@@ -2,12 +2,17 @@ package pl.mzlnk.emergencyspotapi.service.impl;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import pl.mzlnk.emergencyspotapi.model.dto.hospitalreview.HospitalReviewDetailsDto;
+import pl.mzlnk.emergencyspotapi.model.dto.hospitalreview.HospitalReviewDto;
+import pl.mzlnk.emergencyspotapi.model.dto.hospitalreview.NewHospitalReviewDto;
 import pl.mzlnk.emergencyspotapi.model.entity.HospitalReview;
 import pl.mzlnk.emergencyspotapi.model.params.EntityParams;
 import pl.mzlnk.emergencyspotapi.model.params.HospitalReviewParams;
 import pl.mzlnk.emergencyspotapi.repository.HospitalReviewRepository;
+import pl.mzlnk.emergencyspotapi.repository.HospitalStayRepository;
 import pl.mzlnk.emergencyspotapi.service.HospitalReviewService;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -17,30 +22,41 @@ import java.util.stream.Collectors;
 public class HospitalReviewServiceImpl implements HospitalReviewService {
 
     private final HospitalReviewRepository hospitalReviewRepository;
+    private final HospitalStayRepository hospitalStayRepository;
 
     @Override
-    public List<HospitalReview> findAll(EntityParams<HospitalReview> params) {
+    public List<HospitalReviewDto> findAll(EntityParams<HospitalReview> params) {
         return hospitalReviewRepository
                 .findAll(params.toExample())
                 .stream()
                 .filter(review -> review.getRating() > ((HospitalReviewParams) params).minRating)
                 .filter(review -> review.getRating() < ((HospitalReviewParams) params).maxRating)
+                .map(HospitalReviewDto::fromEntity)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public Optional<HospitalReview> findOne(Long id) {
-        return hospitalReviewRepository.findById(id);
+    public Optional<HospitalReviewDetailsDto> findOne(Long id) {
+        return hospitalReviewRepository.findById(id)
+                .map(HospitalReviewDetailsDto::fromEntity);
     }
 
     @Override
-    public void createOrUpdate(HospitalReview hospitalReview) {
-        hospitalReviewRepository.save(hospitalReview);
-    }
+    public void create(NewHospitalReviewDto dto) {
+        hospitalStayRepository.findById(dto.getHospitalStayId())
+                .ifPresentOrElse(hospitalStay -> {
+                            HospitalReview hospitalReview = HospitalReview.builder()
+                                    .hospitalStay(hospitalStay)
+                                    .hospitalWard(hospitalStay.getHospitalWard())
+                                    .rating(dto.getRating())
+                                    .build();
 
-    @Override
-    public void delete(HospitalReview hospitalReview) {
-        hospitalReviewRepository.delete(hospitalReview);
+                            hospitalReviewRepository.save(hospitalReview);
+                        },
+                        () -> {
+                            throw new EntityNotFoundException();
+                        }
+                );
     }
 
     @Override

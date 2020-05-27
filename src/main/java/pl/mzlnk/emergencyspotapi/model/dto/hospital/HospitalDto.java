@@ -1,23 +1,28 @@
 package pl.mzlnk.emergencyspotapi.model.dto.hospital;
 
-import lombok.AllArgsConstructor;
+import lombok.AccessLevel;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import pl.mzlnk.emergencyspotapi.model.entity.Hospital;
 
 @Data
-@AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class HospitalDto {
+
+    public static HospitalDto fromEntity(Hospital hospital) {
+        HospitalDto dto = new HospitalDto();
+
+        dto.id = hospital.getId();
+        dto.name = hospital.getName();
+        dto.description = hospital.getDescription();
+        dto.address = AddressDto.fromEntity(hospital.getAddress());
+
+        return dto;
+    }
 
     private Long id;
     private String name;
     private String description;
     private AddressDto address;
-
-    public HospitalDto(Hospital hospital) {
-        this.id = hospital.getId();
-        this.name = hospital.getName();
-        this.description = hospital.getDescription();
-        this.address = new AddressDto(hospital.getAddress());
-    }
 
 }

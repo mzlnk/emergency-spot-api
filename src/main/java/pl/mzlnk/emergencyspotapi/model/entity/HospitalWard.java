@@ -6,7 +6,9 @@ import lombok.Data;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
+import java.util.Calendar;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Data
 @Entity
@@ -37,6 +39,24 @@ public class HospitalWard extends IdentifiableEntity {
 
     public HospitalWard() {
         super();
+    }
+
+    public List<HospitalStay> getCurrentHospitalStays() {
+        final Calendar now = Calendar.getInstance();
+
+        return hospitalStays
+                .stream()
+                .filter(stay -> now.after(stay.getDateFrom()) && now.before(stay.getDateTo()))
+                .collect(Collectors.toList());
+    }
+
+    public double getAverageRating() {
+        return hospitalReviews
+                .stream()
+                .map(HospitalReview::getRating)
+                .mapToDouble(rating -> rating)
+                .average()
+                .orElse(0);
     }
 
 }

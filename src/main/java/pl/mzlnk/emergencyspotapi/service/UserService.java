@@ -8,11 +8,11 @@ import java.util.Optional;
 
 public interface UserService {
 
-    List<User> findAll();
+    List<UserDto> findAll();
 
-    Optional<User> findOne(Long id);
+    Optional<UserDto> findOne(Long id);
 
-    Optional<User> findByUsername(String username);
+    Optional<UserDto> findByUsername(String username);
 
     void deleteById(Long id);
 
