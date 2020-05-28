@@ -34,7 +34,12 @@ public class AuthenticationController {
         );
         SecurityContextHolder.getContext().setAuthentication(authentication);
         final String token = tokenProvider.generateToken(authentication);
-        return ResponseEntity.ok(new AuthUserDto(userDto.getUsername(), token));
+        Long id = userService
+                .findByUsername(userDto.getUsername())
+                .map(UserDto::getId)
+                .orElse(null);
+
+        return ResponseEntity.ok(new AuthUserDto(id, userDto.getUsername(), token));
     }
 
 }

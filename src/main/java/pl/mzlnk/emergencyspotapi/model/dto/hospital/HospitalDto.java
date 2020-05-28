@@ -13,6 +13,8 @@ public class HospitalDto {
         HospitalDto dto = new HospitalDto();
 
         dto.id = hospital.getId();
+        dto.longitude = hospital.getLongitude();
+        dto.latitude = hospital.getLatitude();
         dto.name = hospital.getName();
         dto.description = hospital.getDescription();
         dto.address = AddressDto.fromEntity(hospital.getAddress());
@@ -21,6 +23,8 @@ public class HospitalDto {
     }
 
     private Long id;
+    private Double longitude;
+    private Double latitude;
     private String name;
     private String description;
     private AddressDto address;

@@ -66,8 +66,8 @@ public class HospitalStayController {
     }
 
     @PostMapping
-    public void createHospitalStay(@RequestBody NewHospitalStayDto hospitalStay) {
-        hospitalStayService.create(hospitalStay);
+    public HospitalStayDetailsDto createHospitalStay(@RequestBody NewHospitalStayDto hospitalStay) {
+        return hospitalStayService.create(hospitalStay);
     }
 
     @DeleteMapping("/{id}")

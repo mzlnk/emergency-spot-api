@@ -7,6 +7,7 @@ import lombok.Getter;
 @AllArgsConstructor
 public class AuthUserDto {
 
+    private Long patientId;
     private String username;
     private String token;
 

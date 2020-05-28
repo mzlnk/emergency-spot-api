@@ -14,7 +14,7 @@ public class UserDto {
     public static UserDto fromEntity(User user) {
         UserDto dto = new UserDto();
 
-        dto.id = user.getId();
+        dto.id = user.getHospitalPatient().getId();
         dto.username = user.getUsername();
         dto.password = user.getPassword();
 
