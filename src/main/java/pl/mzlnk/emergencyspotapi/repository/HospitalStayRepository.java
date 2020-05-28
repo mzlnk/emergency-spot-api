@@ -14,7 +14,7 @@ public interface HospitalStayRepository extends JpaRepository<HospitalStay, Long
 
     List<HospitalStay> findHospitalStaysByDateFromAfterAndDateToBefore(Calendar dateFrom, Calendar dateTo);
 
-    @Query("SELECT s FROM HospitalStay s WHERE s.dateFrom =< :date AND s.dateTo >= :date")
+    @Query("SELECT s FROM HospitalStay s WHERE s.dateFrom <= :date AND s.dateTo >= :date")
     List<HospitalStay> findHospitalStaysByDate(@Param("date") Calendar date);
 
 }

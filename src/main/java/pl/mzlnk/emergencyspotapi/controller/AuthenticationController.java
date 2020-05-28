@@ -13,7 +13,7 @@ import pl.mzlnk.emergencyspotapi.model.dto.AuthTokenDto;
 import pl.mzlnk.emergencyspotapi.model.dto.UserDto;
 import pl.mzlnk.emergencyspotapi.service.UserService;
 
-@CrossOrigin(origins = "*", maxAge = 3600)
+//@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/token")
 @AllArgsConstructor

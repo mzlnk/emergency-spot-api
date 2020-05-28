@@ -1,6 +1,8 @@
 package pl.mzlnk.emergencyspotapi.service.impl;
 
 import lombok.AllArgsConstructor;
+import org.hibernate.annotations.common.util.impl.Log;
+import org.slf4j.Logger;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -16,6 +18,7 @@ import pl.mzlnk.emergencyspotapi.repository.UserRepository;
 import pl.mzlnk.emergencyspotapi.service.UserService;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @Service("userService")
@@ -24,20 +27,29 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final Logger logger;
 
     @Override
-    public List<User> findAll() {
-        return userRepository.findAll();
+    public List<UserDto> findAll() {
+        return userRepository
+                .findAll()
+                .stream()
+                .map(UserDto::fromEntity)
+                .collect(Collectors.toList());
     }
 
     @Override
-    public Optional<User> findOne(Long id) {
-        return userRepository.findById(id);
+    public Optional<UserDto> findOne(Long id) {
+        return userRepository
+                .findById(id)
+                .map(UserDto::fromEntity);
     }
 
     @Override
-    public Optional<User> findByUsername(String username) {
-        return userRepository.findByUsername(username);
+    public Optional<UserDto> findByUsername(String username) {
+        return userRepository
+                .findByUsername(username)
+                .map(UserDto::fromEntity);
     }
 
     @Override
@@ -48,6 +60,9 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     @Override
     public User create(UserDto userDto) {
         User user = new User();
+
+        logger.warn("bcrypt: " + (bCryptPasswordEncoder != null ? "not null" : "null"));
+        logger.info("userdto: " + userDto.toString());
 
         Role userRole = roleRepository.findById(2L).orElse(null);
 
