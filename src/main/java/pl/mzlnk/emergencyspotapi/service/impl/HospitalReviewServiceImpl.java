@@ -13,6 +13,7 @@ import pl.mzlnk.emergencyspotapi.repository.HospitalReviewRepository;
 import pl.mzlnk.emergencyspotapi.repository.HospitalStayRepository;
 import pl.mzlnk.emergencyspotapi.service.HospitalReviewService;
 
+import javax.persistence.EntityExistsException;
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
@@ -43,35 +44,34 @@ public class HospitalReviewServiceImpl implements HospitalReviewService {
     }
 
     @Override
-    public void create(NewHospitalReviewDto dto) {
-        hospitalStayRepository.findById(dto.getHospitalStayId())
-                .ifPresentOrElse(hospitalStay -> {
+    public HospitalReviewDetailsDto create(NewHospitalReviewDto dto) {
+        return hospitalStayRepository
+                .findById(dto.getHospitalStayId())
+                .map(hospitalStay -> {
                             HospitalReview hospitalReview = HospitalReview.builder()
                                     .hospitalStay(hospitalStay)
                                     .hospitalWard(hospitalStay.getHospitalWard())
                                     .rating(dto.getRating())
                                     .build();
 
-                            hospitalReviewRepository.save(hospitalReview);
-                        },
-                        () -> {
-                            throw new EntityNotFoundException();
+                            return hospitalReviewRepository.save(hospitalReview);
                         }
-                );
+                )
+                .map(HospitalReviewDetailsDto::fromEntity)
+                .orElseThrow(EntityExistsException::new);
     }
 
     @Override
-    public void update(UpdateHospitalReviewDto dto) {
-        hospitalReviewRepository.findById(dto.getHospitalReviewId())
-                .ifPresentOrElse(
-                        hospitalReview -> {
+    public HospitalReviewDetailsDto update(UpdateHospitalReviewDto dto) {
+        return hospitalReviewRepository
+                .findById(dto.getHospitalReviewId())
+                .map(hospitalReview -> {
                             hospitalReview.setRating(dto.getNewRating());
-                            hospitalReviewRepository.save(hospitalReview);
-                        },
-                        () -> {
-                            throw new EntityNotFoundException();
+                            return hospitalReviewRepository.save(hospitalReview);
                         }
-                );
+                )
+                .map(HospitalReviewDetailsDto::fromEntity)
+                .orElseThrow(EntityNotFoundException::new);
     }
 
     @Override

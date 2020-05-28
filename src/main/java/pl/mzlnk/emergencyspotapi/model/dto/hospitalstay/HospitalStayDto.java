@@ -2,9 +2,11 @@ package pl.mzlnk.emergencyspotapi.model.dto.hospitalstay;
 
 import java.util.Calendar;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import pl.mzlnk.emergencyspotapi.model.dto.hospitalward.HospitalWardDto;
 import pl.mzlnk.emergencyspotapi.model.entity.HospitalStay;
 
@@ -26,7 +28,10 @@ public class HospitalStayDto {
     private Long id;
     private HospitalWardDto ward;
 
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Calendar dateFrom;
+
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Calendar dateTo;
 
 }

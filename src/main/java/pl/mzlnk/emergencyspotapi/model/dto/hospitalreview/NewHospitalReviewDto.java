@@ -5,8 +5,7 @@ import lombok.Data;
 @Data
 public class NewHospitalReviewDto {
 
-    private Double rating;
-    private Long hospitalWardId;
     private Long hospitalStayId;
+    private Double rating;
 
 }

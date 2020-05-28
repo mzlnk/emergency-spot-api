@@ -1,6 +1,6 @@
 package pl.mzlnk.emergencyspotapi.service;
 
-import pl.mzlnk.emergencyspotapi.model.dto.UserDto;
+import pl.mzlnk.emergencyspotapi.model.dto.user.UserDto;
 import pl.mzlnk.emergencyspotapi.model.entity.User;
 
 import java.util.List;

@@ -1,13 +1,15 @@
 package pl.mzlnk.emergencyspotapi.model.dto.hospitalstay;
 
-import java.util.Calendar;
-
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import pl.mzlnk.emergencyspotapi.model.dto.hospitalreview.HospitalReviewDto;
 import pl.mzlnk.emergencyspotapi.model.dto.hospitalward.HospitalWardDto;
 import pl.mzlnk.emergencyspotapi.model.entity.HospitalStay;
+
+import java.util.Calendar;
+import java.util.Optional;
 
 @Data
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
@@ -20,7 +22,10 @@ public class HospitalStayDetailsDto {
         dto.ward = HospitalWardDto.fromEntity(hospitalStay.getHospitalWard());
         dto.dateFrom = hospitalStay.getDateFrom();
         dto.dateTo = hospitalStay.getDateTo();
-        dto.review = HospitalReviewDto.fromEntity(hospitalStay.getHospitalReview());
+        dto.review = Optional
+                .ofNullable(hospitalStay.getHospitalReview())
+                .map(HospitalReviewDto::fromEntity)
+                .orElse(null);
 
         return dto;
     }
@@ -28,7 +33,10 @@ public class HospitalStayDetailsDto {
     private Long id;
     private HospitalWardDto ward;
 
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Calendar dateFrom;
+
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Calendar dateTo;
 
     private HospitalReviewDto review;

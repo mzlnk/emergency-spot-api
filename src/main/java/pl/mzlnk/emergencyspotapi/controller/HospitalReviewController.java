@@ -42,13 +42,13 @@ public class HospitalReviewController {
     }
 
     @PostMapping
-    public void createReview(@RequestBody NewHospitalReviewDto review) {
-        hospitalReviewService.create(review);
+    public HospitalReviewDetailsDto createReview(@RequestBody NewHospitalReviewDto review) {
+        return hospitalReviewService.create(review);
     }
 
     @PutMapping
-    public void updateReview(@RequestBody UpdateHospitalReviewDto review) {
-        hospitalReviewService.update(review);
+    public HospitalReviewDetailsDto updateReview(@RequestBody UpdateHospitalReviewDto review) {
+        return hospitalReviewService.update(review);
     }
 
     @DeleteMapping("/{id}")

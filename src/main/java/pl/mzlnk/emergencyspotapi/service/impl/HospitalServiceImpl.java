@@ -74,7 +74,7 @@ public class HospitalServiceImpl implements HospitalService {
     }
 
     @Override
-    public void create(NewHospitalDto dto) {
+    public HospitalDetailsDto create(NewHospitalDto dto) {
         Address address = Address.builder()
                 .country(dto.getAddress().getCountry())
                 .city(dto.getAddress().getCity())
@@ -90,7 +90,8 @@ public class HospitalServiceImpl implements HospitalService {
                 .address(address)
                 .build();
 
-        this.hospitalRepository.save(hospital);
+        Hospital saved = this.hospitalRepository.save(hospital);
+        return HospitalDetailsDto.fromEntity(saved);
     }
 
     @Override

@@ -8,6 +8,6 @@ import pl.mzlnk.emergencyspotapi.model.entity.HospitalReview;
 
 public interface HospitalReviewService extends EntityService<HospitalReviewDto, HospitalReviewDetailsDto, NewHospitalReviewDto, HospitalReview> {
 
-    void update(UpdateHospitalReviewDto dto);
+    HospitalReviewDetailsDto update(UpdateHospitalReviewDto dto);
 
 }

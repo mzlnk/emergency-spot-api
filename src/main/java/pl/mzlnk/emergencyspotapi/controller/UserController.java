@@ -3,7 +3,7 @@ package pl.mzlnk.emergencyspotapi.controller;
 import lombok.AllArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import pl.mzlnk.emergencyspotapi.model.dto.UserDto;
+import pl.mzlnk.emergencyspotapi.model.dto.user.UserDto;
 import pl.mzlnk.emergencyspotapi.model.entity.User;
 import pl.mzlnk.emergencyspotapi.service.UserService;
 

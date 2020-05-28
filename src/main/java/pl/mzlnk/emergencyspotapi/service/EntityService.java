@@ -11,7 +11,7 @@ public interface EntityService<R, D, N, E> {
 
     Optional<D> findOne(Long id);
 
-    void create(N entity);
+    D create(N entity);
 
     void deleteById(Long id);
 

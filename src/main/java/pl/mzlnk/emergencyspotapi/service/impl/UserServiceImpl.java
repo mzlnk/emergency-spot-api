@@ -1,7 +1,6 @@
 package pl.mzlnk.emergencyspotapi.service.impl;
 
 import lombok.AllArgsConstructor;
-import org.hibernate.annotations.common.util.impl.Log;
 import org.slf4j.Logger;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -9,7 +8,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import pl.mzlnk.emergencyspotapi.model.dto.UserDto;
+import pl.mzlnk.emergencyspotapi.model.dto.user.UserDto;
 import pl.mzlnk.emergencyspotapi.model.entity.HospitalPatient;
 import pl.mzlnk.emergencyspotapi.model.entity.Role;
 import pl.mzlnk.emergencyspotapi.model.entity.User;

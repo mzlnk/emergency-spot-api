@@ -14,6 +14,7 @@ import pl.mzlnk.emergencyspotapi.repository.HospitalWardRepository;
 import pl.mzlnk.emergencyspotapi.service.HospitalStayService;
 import pl.mzlnk.emergencyspotapi.utils.distance.BiOptional;
 
+import javax.persistence.EntityExistsException;
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
@@ -44,12 +45,12 @@ public class HospitalStayServiceImpl implements HospitalStayService {
     }
 
     @Override
-    public void create(NewHospitalStayDto dto) {
-        BiOptional.of(
+    public HospitalStayDetailsDto create(NewHospitalStayDto dto) {
+        return BiOptional.of(
                 hospitalWardRepository.findById(dto.getHospitalWardId()),
                 hospitalPatientRepository.findById(dto.getPatientId())
         )
-                .ifPresentOrElse((hospitalWard, hospitalPatient) -> {
+                .map((hospitalWard, hospitalPatient) -> {
                             HospitalStay hospitalStay = HospitalStay.builder()
                                     .hospitalPatient(hospitalPatient)
                                     .hospitalWard(hospitalWard)
@@ -57,11 +58,11 @@ public class HospitalStayServiceImpl implements HospitalStayService {
                                     .dateTo(dto.getDateTo())
                                     .build();
 
-                            hospitalStayRepository.save(hospitalStay);
-                        },
-                        () -> {
-                            throw new EntityNotFoundException();
-                        });
+                            return hospitalStayRepository.save(hospitalStay);
+                        }
+                )
+                .map(HospitalStayDetailsDto::fromEntity)
+                .orElseThrow(EntityNotFoundException::new);
     }
 
     @Override

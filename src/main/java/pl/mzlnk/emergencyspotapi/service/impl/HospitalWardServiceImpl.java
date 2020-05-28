@@ -49,9 +49,9 @@ public class HospitalWardServiceImpl implements HospitalWardService {
     }
 
     @Override
-    public void create(NewHospitalWardDto dto) {
-        hospitalRepository.findById(dto.getHospitalId())
-                .ifPresentOrElse(
+    public HospitalWardDetailsDto create(NewHospitalWardDto dto) {
+        return hospitalRepository.findById(dto.getHospitalId())
+                .map(
                         hospital -> {
                             HospitalWard hospitalWard = HospitalWard.builder()
                                     .wardType(dto.getWardType())
@@ -59,12 +59,11 @@ public class HospitalWardServiceImpl implements HospitalWardService {
                                     .hospital(hospital)
                                     .build();
 
-                            hospitalWardRepository.save(hospitalWard);
-                        },
-                        () -> {
-                            throw new EntityNotFoundException();
+                            return hospitalWardRepository.save(hospitalWard);
                         }
-                );
+                )
+                .map(HospitalWardDetailsDto::fromEntity)
+                .orElseThrow(EntityNotFoundException::new);
     }
 
     @Override

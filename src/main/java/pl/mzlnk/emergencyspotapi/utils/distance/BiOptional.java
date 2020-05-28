@@ -2,6 +2,8 @@ package pl.mzlnk.emergencyspotapi.utils.distance;
 
 import java.util.Optional;
 import java.util.function.BiConsumer;
+import java.util.function.BiFunction;
+import java.util.function.Function;
 
 public class BiOptional<T, U> {
 
@@ -27,6 +29,14 @@ public class BiOptional<T, U> {
                 },
                 emptyAction::run
         );
+    }
+
+    public <R> Optional<R> map(BiFunction<T, U, R> mapper) {
+        if(this.first.isEmpty() || this.second.isEmpty()) {
+            return Optional.empty();
+        }
+
+        return Optional.ofNullable(mapper.apply(first.get(), second.get()));
     }
 
 }

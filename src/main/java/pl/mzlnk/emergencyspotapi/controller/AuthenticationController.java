@@ -9,8 +9,8 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import pl.mzlnk.emergencyspotapi.config.jwt.TokenProvider;
-import pl.mzlnk.emergencyspotapi.model.dto.AuthTokenDto;
-import pl.mzlnk.emergencyspotapi.model.dto.UserDto;
+import pl.mzlnk.emergencyspotapi.model.dto.user.UserDto;
+import pl.mzlnk.emergencyspotapi.model.dto.user.AuthUserDto;
 import pl.mzlnk.emergencyspotapi.service.UserService;
 
 //@CrossOrigin(origins = "*", maxAge = 3600)
@@ -34,7 +34,7 @@ public class AuthenticationController {
         );
         SecurityContextHolder.getContext().setAuthentication(authentication);
         final String token = tokenProvider.generateToken(authentication);
-        return ResponseEntity.ok(new AuthTokenDto(token));
+        return ResponseEntity.ok(new AuthUserDto(userDto.getUsername(), token));
     }
 
 }
