@@ -10,10 +10,16 @@ import org.springframework.format.annotation.DateTimeFormat;
 import pl.mzlnk.emergencyspotapi.model.dto.hospitalward.HospitalWardDto;
 import pl.mzlnk.emergencyspotapi.model.entity.HospitalStay;
 
+/**
+ * DTO class representing hospital stay
+ */
 @Data
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class HospitalStayDto {
 
+    /**
+     * Obtain instance based on entity representation
+     */
     public static HospitalStayDto fromEntity(HospitalStay hospitalStay) {
         HospitalStayDto dto = new HospitalStayDto();
 

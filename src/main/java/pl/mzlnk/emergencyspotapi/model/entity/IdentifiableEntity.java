@@ -8,6 +8,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
+/**
+ * Entity superclass describing identification of rows in tables in database
+ */
 @Getter
 @SuperBuilder(toBuilder = true)
 @MappedSuperclass

@@ -20,6 +20,9 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
+/**
+ * Represents implementation of service API for hospitals
+ */
 @Service
 @AllArgsConstructor
 public class HospitalServiceImpl implements HospitalService {
@@ -27,6 +30,11 @@ public class HospitalServiceImpl implements HospitalService {
     private final HospitalRepository hospitalRepository;
     private final DistanceUtils distanceUtils;
 
+    /**
+     * Obtain list of hospitals based on given parameters
+     * @param params search parameters
+     * @return list of hospitals
+     */
     @Override
     public List<HospitalDto> findAll(EntityParams<Hospital> params) {
         List<Hospital> result = hospitalRepository.findAll(params.toExample());
@@ -49,6 +57,11 @@ public class HospitalServiceImpl implements HospitalService {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Obtain details about hospital with given ID
+     * @param id hospital's unique ID
+     * @return hospital details or null if hospital with given ID does not exist
+     */
     @Override
     public Optional<HospitalDetailsDto> findOne(Long id) {
         return hospitalRepository
@@ -56,6 +69,12 @@ public class HospitalServiceImpl implements HospitalService {
                 .map(HospitalDetailsDto::fromEntity);
     }
 
+    /**
+     * Obtain nearest hospital based on given location details
+     * @param longitude given location longitude
+     * @param latitude given location latitude
+     * @return nearest hospital to given location details or null if no hospital exists
+     */
     @Override
     public Optional<HospitalDetailsDto> findNearest(double longitude, double latitude) {
         Coordinates coords = new Coordinates(longitude, latitude);
@@ -73,20 +92,25 @@ public class HospitalServiceImpl implements HospitalService {
                 .map(HospitalDetailsDto::fromEntity);
     }
 
+    /**
+     * Create new hospital
+     * @param entity DTO instance representing information about creating hospital
+     * @return details of created hospital
+     */
     @Override
-    public HospitalDetailsDto create(NewHospitalDto dto) {
+    public HospitalDetailsDto create(NewHospitalDto entity) {
         Address address = Address.builder()
-                .country(dto.getAddress().getCountry())
-                .city(dto.getAddress().getCity())
-                .street(dto.getAddress().getStreet())
-                .streetNumber(dto.getAddress().getStreetNumber())
+                .country(entity.getAddress().getCountry())
+                .city(entity.getAddress().getCity())
+                .street(entity.getAddress().getStreet())
+                .streetNumber(entity.getAddress().getStreetNumber())
                 .build();
 
         Hospital hospital = Hospital.builder()
-                .longitude(dto.getLongitude())
-                .latitude(dto.getLatitude())
-                .name(dto.getName())
-                .description(dto.getDescription())
+                .longitude(entity.getLongitude())
+                .latitude(entity.getLatitude())
+                .name(entity.getName())
+                .description(entity.getDescription())
                 .address(address)
                 .build();
 
@@ -94,6 +118,10 @@ public class HospitalServiceImpl implements HospitalService {
         return HospitalDetailsDto.fromEntity(saved);
     }
 
+    /**
+     * Delete existing hospital
+     * @param id hospital's unique ID
+     */
     @Override
     public void deleteById(Long id) {
         hospitalRepository.deleteById(id);

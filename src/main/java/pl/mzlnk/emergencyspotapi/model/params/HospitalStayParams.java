@@ -9,6 +9,9 @@ import pl.mzlnk.emergencyspotapi.model.entity.HospitalWard;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
+/**
+ * Represents implementation of entity params for HospitalStay entity
+ */
 @Builder
 public class HospitalStayParams implements EntityParams<HospitalStay> {
 

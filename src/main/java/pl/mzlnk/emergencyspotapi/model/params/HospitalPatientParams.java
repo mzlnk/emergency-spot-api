@@ -4,6 +4,9 @@ import lombok.Builder;
 import org.springframework.data.domain.Example;
 import pl.mzlnk.emergencyspotapi.model.entity.HospitalPatient;
 
+/**
+ * Represents implementation for entity params for HospitalPatient entity
+ */
 @Builder
 public class HospitalPatientParams implements EntityParams<HospitalPatient> {
 

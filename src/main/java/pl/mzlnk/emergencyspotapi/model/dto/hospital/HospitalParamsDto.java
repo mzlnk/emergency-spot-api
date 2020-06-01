@@ -5,6 +5,9 @@ import pl.mzlnk.emergencyspotapi.model.entity.HospitalWardTypeEnum;
 
 import java.util.List;
 
+/**
+ * DTO class representing hospital search parameters
+ */
 @Data
 public class HospitalParamsDto {
 

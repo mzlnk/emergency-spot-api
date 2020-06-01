@@ -6,6 +6,9 @@ import pl.mzlnk.emergencyspotapi.model.entity.Hospital;
 import pl.mzlnk.emergencyspotapi.model.entity.HospitalWard;
 import pl.mzlnk.emergencyspotapi.model.entity.HospitalWardTypeEnum;
 
+/**
+ * Represents implementation of entity params for HospitalWard entity
+ */
 @Builder
 public class HospitalWardParams implements EntityParams<HospitalWard> {
 

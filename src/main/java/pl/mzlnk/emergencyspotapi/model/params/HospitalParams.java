@@ -9,6 +9,10 @@ import pl.mzlnk.emergencyspotapi.model.entity.HospitalWardTypeEnum;
 
 import java.util.List;
 
+
+/**
+ * Represents implementation of entity params for Hospital etity
+ */
 @Builder
 public class HospitalParams implements EntityParams<Hospital> {
 

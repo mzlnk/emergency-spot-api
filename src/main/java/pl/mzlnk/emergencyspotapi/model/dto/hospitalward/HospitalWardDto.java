@@ -7,10 +7,16 @@ import pl.mzlnk.emergencyspotapi.model.dto.hospital.HospitalDto;
 import pl.mzlnk.emergencyspotapi.model.entity.HospitalWard;
 import pl.mzlnk.emergencyspotapi.model.entity.HospitalWardTypeEnum;
 
+/**
+ * DTO class representing hospital ward
+ */
 @Data
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class HospitalWardDto {
 
+    /**
+     * Obtain instance based on entity representation
+     */
     public static HospitalWardDto fromEntity(HospitalWard hospitalWard) {
         HospitalWardDto dto = new HospitalWardDto();
 

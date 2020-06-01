@@ -5,6 +5,9 @@ import lombok.Data;
 
 import java.util.Calendar;
 
+/**
+ * DTO class representing hospital stay to be created
+ */
 @Data
 public class NewHospitalStayDto {
 

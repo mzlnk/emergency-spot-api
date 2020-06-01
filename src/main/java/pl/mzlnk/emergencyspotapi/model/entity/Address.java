@@ -5,6 +5,9 @@ import lombok.*;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
+/**
+ * Entity class representing structure of address columns in database
+ */
 @Data
 @Embeddable
 @Builder

@@ -6,6 +6,9 @@ import lombok.Data;
 import javax.persistence.*;
 import java.util.Set;
 
+/**
+ * Entity class representing structure of users table in database
+ */
 @Data
 @Entity
 @Table(name = "users")

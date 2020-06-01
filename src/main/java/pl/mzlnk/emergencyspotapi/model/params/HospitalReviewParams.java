@@ -6,6 +6,9 @@ import pl.mzlnk.emergencyspotapi.model.entity.Hospital;
 import pl.mzlnk.emergencyspotapi.model.entity.HospitalReview;
 import pl.mzlnk.emergencyspotapi.model.entity.HospitalWard;
 
+/**
+ * Represents implementation of entity params for HospitalReview entity
+ */
 @Builder
 public class HospitalReviewParams implements EntityParams<HospitalReview> {
 

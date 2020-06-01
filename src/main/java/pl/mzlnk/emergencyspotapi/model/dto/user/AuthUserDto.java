@@ -3,6 +3,9 @@ package pl.mzlnk.emergencyspotapi.model.dto.user;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+/**
+ * DTO class representing user's authentication details
+ */
 @Getter
 @AllArgsConstructor
 public class AuthUserDto {

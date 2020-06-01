@@ -9,6 +9,9 @@ import lombok.experimental.SuperBuilder;
 import javax.persistence.*;
 import java.util.Calendar;
 
+/**
+ * Entity class representing structure of hospital_stays table in database
+ */
 @Getter
 @Entity
 @SuperBuilder(toBuilder = true)

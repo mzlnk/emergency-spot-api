@@ -5,10 +5,16 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import pl.mzlnk.emergencyspotapi.model.entity.Address;
 
+/**
+ * DTO class representing an address (country, city, street, streetNumber)
+ */
 @Data
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class AddressDto {
 
+    /**
+     * Obtain instance based on entity representation
+     */
     public static AddressDto fromEntity(Address address) {
         AddressDto dto = new AddressDto();
 

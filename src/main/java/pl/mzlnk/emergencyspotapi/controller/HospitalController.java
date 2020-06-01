@@ -96,7 +96,7 @@ public class HospitalController {
      * Handle GET request to obtain nearest hospital based on given location details
      * @param longitude given location longitude
      * @param latitude given location latitude
-     * @return nearest hospital to given location details or null if no hospital exist
+     * @return nearest hospital to given location details or null if no hospital exists
      */
     @GetMapping("/nearest")
     public Optional<HospitalDetailsDto> findNearest(@RequestParam Double longitude,

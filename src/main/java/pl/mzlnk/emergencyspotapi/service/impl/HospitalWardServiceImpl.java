@@ -22,6 +22,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+/**
+ * Represents implementation of service API for hospital wards
+ */
 @Service
 @AllArgsConstructor
 public class HospitalWardServiceImpl implements HospitalWardService {
@@ -30,6 +33,11 @@ public class HospitalWardServiceImpl implements HospitalWardService {
     private final HospitalRepository hospitalRepository;
     private final Logger logger;
 
+    /**
+     * Obtain list of hospital wards based on given parameters
+     * @param params search parameters
+     * @return list of hospital wards
+     */
     @Override
     public List<HospitalWardDto> findAll(EntityParams<HospitalWard> params) {
         return hospitalWardRepository
@@ -41,6 +49,11 @@ public class HospitalWardServiceImpl implements HospitalWardService {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Obtain details about hospital ward with given ID
+     * @param id hospital ward's unique ID
+     * @return hospital ward details or null if hospital ward with given ID does not exist
+     */
     @Override
     public Optional<HospitalWardDetailsDto> findOne(Long id) {
         return hospitalWardRepository
@@ -48,6 +61,11 @@ public class HospitalWardServiceImpl implements HospitalWardService {
                 .map(HospitalWardDetailsDto::fromEntity);
     }
 
+    /**
+     * Create new hospital ward
+     * @param entity DTO instance representing information about creating hospital ward
+     * @return details of created hospital ward
+     */
     @Override
     public HospitalWardDetailsDto create(NewHospitalWardDto dto) {
         return hospitalRepository.findById(dto.getHospitalId())
@@ -66,6 +84,10 @@ public class HospitalWardServiceImpl implements HospitalWardService {
                 .orElseThrow(EntityNotFoundException::new);
     }
 
+    /**
+     * Delete existing hospital ward
+     * @param id hospital ward's unique ID
+     */
     @Override
     public void deleteById(Long id) {
         hospitalWardRepository.deleteById(id);

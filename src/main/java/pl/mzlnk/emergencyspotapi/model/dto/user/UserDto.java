@@ -6,11 +6,17 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import pl.mzlnk.emergencyspotapi.model.entity.User;
 
+/**
+ * DTO class representing user
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class UserDto {
 
+    /**
+     * Obtain instance based on entity representation
+     */
     public static UserDto fromEntity(User user) {
         UserDto dto = new UserDto();
 

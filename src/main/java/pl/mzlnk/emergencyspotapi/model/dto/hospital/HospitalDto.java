@@ -5,10 +5,16 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import pl.mzlnk.emergencyspotapi.model.entity.Hospital;
 
+/**
+ * DTO class representing hospital
+ */
 @Data
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class HospitalDto {
 
+    /**
+     * Obtain instance based on entity representation
+     */
     public static HospitalDto fromEntity(Hospital hospital) {
         HospitalDto dto = new HospitalDto();
 

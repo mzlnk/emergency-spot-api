@@ -10,10 +10,16 @@ import pl.mzlnk.emergencyspotapi.model.entity.HospitalWard;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * DTO class representing hospital details
+ */
 @Data
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class HospitalDetailsDto {
 
+    /**
+     * Obtain instance based on entity representation
+     */
     public static HospitalDetailsDto fromEntity(Hospital hospital) {
         HospitalDetailsDto dto = new HospitalDetailsDto();
 

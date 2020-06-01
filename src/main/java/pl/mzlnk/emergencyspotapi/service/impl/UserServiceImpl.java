@@ -20,6 +20,9 @@ import pl.mzlnk.emergencyspotapi.service.UserService;
 import java.util.*;
 import java.util.stream.Collectors;
 
+/**
+ * Represents implementation of service API for users
+ */
 @AllArgsConstructor
 @Service("userService")
 public class UserServiceImpl implements UserDetailsService, UserService {
@@ -29,6 +32,10 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final Logger logger;
 
+    /**
+     * Obtain list of all users
+     * @return list of all users
+     */
     @Override
     public List<UserDto> findAll() {
         return userRepository
@@ -38,6 +45,11 @@ public class UserServiceImpl implements UserDetailsService, UserService {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Obtain details about user with given ID
+     * @param id users's unique ID
+     * @return users details or null if user with given ID does not exist
+     */
     @Override
     public Optional<UserDto> findOne(Long id) {
         return userRepository
@@ -45,6 +57,11 @@ public class UserServiceImpl implements UserDetailsService, UserService {
                 .map(UserDto::fromEntity);
     }
 
+    /**
+     * Obtain details about user with given username
+     * @param username user username
+     * @return users details or null if user with given username does not exist
+     */
     @Override
     public Optional<UserDto> findByUsername(String username) {
         return userRepository
@@ -52,11 +69,20 @@ public class UserServiceImpl implements UserDetailsService, UserService {
                 .map(UserDto::fromEntity);
     }
 
+    /**
+     * Delete existing user
+     * @param id user's unique ID
+     */
     @Override
     public void deleteById(Long id) {
         userRepository.deleteById(id);
     }
 
+    /**
+     * Create new user
+     * @param userDto DTO instance representing information about creating user
+     * @return details of created user
+     */
     @Override
     public User create(NewUserDto userDto) {
         User user = new User();
@@ -81,6 +107,12 @@ public class UserServiceImpl implements UserDetailsService, UserService {
         return userRepository.save(user);
     }
 
+    /**
+     * Load user details based on given username
+     * @param username username
+     * @return user details for user with given username
+     * @throws UsernameNotFoundException
+     */
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return userRepository
                 .findByUsername(username)
@@ -92,6 +124,11 @@ public class UserServiceImpl implements UserDetailsService, UserService {
                 .orElseThrow(() -> new UsernameNotFoundException("Invalid username or password."));
     }
 
+    /**
+     * Obtains authorities associated with given user
+     * @param user user
+     * @return Set of authorities
+     */
     private Set<SimpleGrantedAuthority> getAuthority(User user) {
         Set<SimpleGrantedAuthority> authorities = new HashSet<>();
         user.getRoles().forEach(role -> {

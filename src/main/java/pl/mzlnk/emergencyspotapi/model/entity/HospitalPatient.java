@@ -8,6 +8,9 @@ import lombok.experimental.SuperBuilder;
 import javax.persistence.*;
 import java.util.List;
 
+/**
+ * Entity class representing structure of hospital_patients table in database
+ */
 @Getter
 @Entity
 @SuperBuilder

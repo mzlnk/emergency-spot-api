@@ -11,10 +11,16 @@ import pl.mzlnk.emergencyspotapi.model.entity.HospitalStay;
 import java.util.Calendar;
 import java.util.Optional;
 
+/**
+ * DTO class representing hospital stay details
+ */
 @Data
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class HospitalStayDetailsDto {
 
+    /**
+     * Obtain instance based on entity representation
+     */
     public static HospitalStayDetailsDto fromEntity(HospitalStay hospitalStay) {
         HospitalStayDetailsDto dto = new HospitalStayDetailsDto();
 

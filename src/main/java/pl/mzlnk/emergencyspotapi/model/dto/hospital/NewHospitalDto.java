@@ -2,6 +2,9 @@ package pl.mzlnk.emergencyspotapi.model.dto.hospital;
 
 import lombok.Data;
 
+/**
+ * DTO class representing hospital to be created
+ */
 @Data
 public class NewHospitalDto {
 

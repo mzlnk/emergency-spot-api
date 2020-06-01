@@ -33,7 +33,7 @@ public class UserController {
     }
 
     /**
-     * handle GET request to obtain details of user with given ID
+     * Handle GET request to obtain details of user with given ID
      * @param id user's unique ID
      * @return
      */

@@ -10,6 +10,9 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Entity class representing structure of hospital_wards table in database
+ */
 @Data
 @Entity
 @SuperBuilder

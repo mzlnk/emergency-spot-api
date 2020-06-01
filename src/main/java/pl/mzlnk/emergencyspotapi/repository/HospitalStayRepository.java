@@ -9,6 +9,9 @@ import pl.mzlnk.emergencyspotapi.model.entity.HospitalStay;
 import java.util.Calendar;
 import java.util.List;
 
+/**
+ * Represents an API for access to data stored in hospital_stays table in database
+ */
 @Repository
 public interface HospitalStayRepository extends JpaRepository<HospitalStay, Long> {
 

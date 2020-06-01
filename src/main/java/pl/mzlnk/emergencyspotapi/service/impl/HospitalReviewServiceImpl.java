@@ -19,6 +19,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+/**
+ * Represents implementation of service API for hospital reviews
+ */
 @Service
 @AllArgsConstructor
 public class HospitalReviewServiceImpl implements HospitalReviewService {
@@ -26,6 +29,11 @@ public class HospitalReviewServiceImpl implements HospitalReviewService {
     private final HospitalReviewRepository hospitalReviewRepository;
     private final HospitalStayRepository hospitalStayRepository;
 
+    /**
+     * Obtain list of hospital reviews based on given parameters
+     * @param params search parameters
+     * @return list of hospital reviews
+     */
     @Override
     public List<HospitalReviewDto> findAll(EntityParams<HospitalReview> params) {
         return hospitalReviewRepository
@@ -37,21 +45,31 @@ public class HospitalReviewServiceImpl implements HospitalReviewService {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Obtain details about hospital review with given ID
+     * @param id hospital review's unique ID
+     * @return hospital review details or null if hospital review with given ID does not exist
+     */
     @Override
     public Optional<HospitalReviewDetailsDto> findOne(Long id) {
         return hospitalReviewRepository.findById(id)
                 .map(HospitalReviewDetailsDto::fromEntity);
     }
 
+    /**
+     * Create new hospital review
+     * @param entity DTO instance representing information about creating hospital review
+     * @return details of created hospital review
+     */
     @Override
-    public HospitalReviewDetailsDto create(NewHospitalReviewDto dto) {
+    public HospitalReviewDetailsDto create(NewHospitalReviewDto entity) {
         return hospitalStayRepository
-                .findById(dto.getHospitalStayId())
+                .findById(entity.getHospitalStayId())
                 .map(hospitalStay -> {
                             HospitalReview hospitalReview = HospitalReview.builder()
                                     .hospitalStay(hospitalStay)
                                     .hospitalWard(hospitalStay.getHospitalWard())
-                                    .rating(dto.getRating())
+                                    .rating(entity.getRating())
                                     .build();
 
                             return hospitalReviewRepository.save(hospitalReview);
@@ -61,6 +79,11 @@ public class HospitalReviewServiceImpl implements HospitalReviewService {
                 .orElseThrow(EntityExistsException::new);
     }
 
+    /**
+     * Update existing hospital review
+     * @param dto DTO instance representing information of updated hospital review
+     * @return details of updated hospital review
+     */
     @Override
     public HospitalReviewDetailsDto update(UpdateHospitalReviewDto dto) {
         return hospitalReviewRepository
@@ -74,6 +97,10 @@ public class HospitalReviewServiceImpl implements HospitalReviewService {
                 .orElseThrow(EntityNotFoundException::new);
     }
 
+    /**
+     * Delete existing hospital review
+     * @param id hospital review's unique ID
+     */
     @Override
     public void deleteById(Long id) {
         hospitalReviewRepository.deleteById(id);

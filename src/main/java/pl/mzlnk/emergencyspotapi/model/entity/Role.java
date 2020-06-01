@@ -7,6 +7,9 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
+/**
+ * Entity class representing structure of roles table in database
+ */
 @Data
 @Entity
 @Table(name = "roles")
