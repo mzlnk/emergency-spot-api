@@ -13,16 +13,36 @@ import pl.mzlnk.emergencyspotapi.model.dto.user.UserDto;
 import pl.mzlnk.emergencyspotapi.model.dto.user.AuthUserDto;
 import pl.mzlnk.emergencyspotapi.service.UserService;
 
+/**
+ * Controller dedicated to handle /token/* endpoints
+ */
 //@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/token")
 @AllArgsConstructor
 public class AuthenticationController {
 
+    /**
+     * Injected AuthenticationManager instance
+     */
     private final AuthenticationManager authenticationManager;
+
+    /**
+     * Injected TokenProvider instance
+     */
     private final TokenProvider tokenProvider;
+
+    /**
+     * Injected UserService instance
+     */
     private final UserService userService;
 
+    /**
+     * Handle POST request to generate JWT token based on provided user details (username, password)
+     * @param userDto DTO instance containing username and password
+     * @return DTO instance containing authentication response (token, user ID, etc.)
+     * @throws AuthenticationException
+     */
     @PostMapping(value = "/generate")
     public ResponseEntity<?> register(@RequestBody UserDto userDto) throws AuthenticationException {
 

@@ -19,6 +19,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * Filter base class that aims to guarantee a single execution per request dispatch, on any servlet container.
+ */
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     @Autowired
@@ -43,6 +46,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     @Value("${emergencyspotapi.jwt.authorities.key}")
     private String authoritiesKey;
 
+    /**
+     * Same contract as for doFilter, but guaranteed to be just invoked once per request within a single request thread.
+     * @throws IOException
+     * @throws ServletException
+     */
     @Override
     protected void doFilterInternal(HttpServletRequest req, HttpServletResponse res, FilterChain chain) throws IOException, ServletException {
         String header = req.getHeader(this.header);

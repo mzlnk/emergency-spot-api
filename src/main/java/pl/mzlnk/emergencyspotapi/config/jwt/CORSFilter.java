@@ -6,6 +6,14 @@ import java.io.IOException;
 
 public class CORSFilter implements Filter {
 
+    /**
+     * Bean used to provide proper configuration for JWT token support
+     * @param req servlet request
+     * @param res servlet response
+     * @param chain filter
+     * @throws IOException
+     * @throws ServletException
+     */
     @Override
     public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
         HttpServletResponse response = (HttpServletResponse) res;
@@ -18,9 +26,16 @@ public class CORSFilter implements Filter {
         chain.doFilter(req, res);
     }
 
+    /**
+     * Method used to initialize filter
+     * @param filterConfig filter config
+     */
     @Override
     public void init(FilterConfig filterConfig) {}
 
+    /**
+     * Method used to cleanup
+     */
     @Override
     public void destroy() {
 

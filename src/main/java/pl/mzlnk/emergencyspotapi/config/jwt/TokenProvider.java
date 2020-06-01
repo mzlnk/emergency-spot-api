@@ -16,6 +16,9 @@ import java.util.Date;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+/**
+ * Component class providing methods accessing given JWT token
+ */
 @Component
 public class TokenProvider implements Serializable {
 
@@ -28,10 +31,20 @@ public class TokenProvider implements Serializable {
     @Value("${emergencyspotapi.jwt.authorities.key}")
     private String authoritiesKey;
 
+    /**
+     * Obtain username from given token
+     * @param token given JWT token
+     * @return username associated with the token
+     */
     public String getUsernameFromToken(String token) {
         return getClaimFromToken(token, Claims::getSubject);
     }
 
+    /**
+     * Obtain expiration date from given token
+     * @param token given JWT token
+     * @return expiration date of given token
+     */
     public Date getExpirationDateFromToken(String token) {
         return getClaimFromToken(token, Claims::getExpiration);
     }
@@ -48,11 +61,21 @@ public class TokenProvider implements Serializable {
                 .getBody();
     }
 
+    /**
+     * Check if given token expired
+     * @param token given JWT token
+     * @return result whether token is expired or not
+     */
     private Boolean isTokenExpired(String token) {
         final Date expiration = getExpirationDateFromToken(token);
         return expiration.before(new Date());
     }
 
+    /**
+     * Generate token based on provided authentication configuration
+     * @param authentication provided request authentication
+     * @return generated token
+     */
     public String generateToken(Authentication authentication) {
         final String authorities = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
@@ -67,12 +90,25 @@ public class TokenProvider implements Serializable {
                 .compact();
     }
 
+    /**
+     * Validate token with provided user details
+     * @param token given JWT token
+     * @param userDetails given user detals
+     * @return result whether token is validated
+     */
     public Boolean validateToken(String token, UserDetails userDetails) {
         final String username = getUsernameFromToken(token);
 
         return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
     }
 
+    /**
+     * Obtain authentication from given JWT token and user details
+     * @param token given JWT token
+     * @param existingAuth existing authentication
+     * @param userDetails given user details
+     * @return authentication token
+     */
     UsernamePasswordAuthenticationToken getAuthentication(final String token, final Authentication existingAuth, final UserDetails userDetails) {
         final JwtParser jwtParser = Jwts.parser().setSigningKey(this.secret);
         final Jws<Claims> claimsJws = jwtParser.parseClaimsJws(token);
