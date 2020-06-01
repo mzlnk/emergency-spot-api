@@ -1,8 +1,11 @@
 package pl.mzlnk.emergencyspotapi.controller;
 
 import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.function.EntityResponse;
+import pl.mzlnk.emergencyspotapi.model.dto.user.NewUserDto;
 import pl.mzlnk.emergencyspotapi.model.dto.user.UserDto;
 import pl.mzlnk.emergencyspotapi.model.entity.User;
 import pl.mzlnk.emergencyspotapi.service.UserService;
@@ -32,8 +35,8 @@ public class UserController {
     }
 
     @PostMapping("/signup")
-    public User saveUser(@RequestBody UserDto user) {
-        return userService.create(user);
+    public void saveUser(@RequestBody NewUserDto user) {
+        this.userService.create(user);
     }
 
     @GetMapping("/me")

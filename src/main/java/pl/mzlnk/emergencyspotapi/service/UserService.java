@@ -1,5 +1,6 @@
 package pl.mzlnk.emergencyspotapi.service;
 
+import pl.mzlnk.emergencyspotapi.model.dto.user.NewUserDto;
 import pl.mzlnk.emergencyspotapi.model.dto.user.UserDto;
 import pl.mzlnk.emergencyspotapi.model.entity.User;
 
@@ -16,6 +17,6 @@ public interface UserService {
 
     void deleteById(Long id);
 
-    User create(UserDto userDto);
+    User create(NewUserDto userDto);
 
 }

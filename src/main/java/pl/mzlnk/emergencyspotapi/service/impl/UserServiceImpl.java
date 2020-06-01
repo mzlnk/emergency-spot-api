@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import pl.mzlnk.emergencyspotapi.model.dto.user.NewUserDto;
 import pl.mzlnk.emergencyspotapi.model.dto.user.UserDto;
 import pl.mzlnk.emergencyspotapi.model.entity.HospitalPatient;
 import pl.mzlnk.emergencyspotapi.model.entity.Role;
@@ -57,7 +58,7 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     }
 
     @Override
-    public User create(UserDto userDto) {
+    public User create(NewUserDto userDto) {
         User user = new User();
 
         logger.warn("bcrypt: " + (bCryptPasswordEncoder != null ? "not null" : "null"));
