@@ -52,7 +52,7 @@ public class HospitalReviewController {
     /**
      * Handle GET request to obtain details of hospital review with given ID
      * @param id given hospital review's unique ID
-     * @return
+     * @return details of hospital review
      */
     @GetMapping("/{id}")
     public Optional<HospitalReviewDetailsDto> findOne(@PathVariable Long id) {

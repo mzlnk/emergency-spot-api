@@ -111,7 +111,7 @@ public class UserServiceImpl implements UserDetailsService, UserService {
      * Load user details based on given username
      * @param username username
      * @return user details for user with given username
-     * @throws UsernameNotFoundException
+     * @throws UsernameNotFoundException if username does not exists
      */
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return userRepository

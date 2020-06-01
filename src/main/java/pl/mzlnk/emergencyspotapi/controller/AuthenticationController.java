@@ -41,7 +41,7 @@ public class AuthenticationController {
      * Handle POST request to generate JWT token based on provided user details (username, password)
      * @param userDto DTO instance containing username and password
      * @return DTO instance containing authentication response (token, user ID, etc.)
-     * @throws AuthenticationException
+     * @throws AuthenticationException if user credentails does not match to any user stored in database
      */
     @PostMapping(value = "/generate")
     public ResponseEntity<?> register(@RequestBody UserDto userDto) throws AuthenticationException {

@@ -14,6 +14,8 @@ public class AddressDto {
 
     /**
      * Obtain instance based on entity representation
+     * @param address entity
+     * @return DTO instance
      */
     public static AddressDto fromEntity(Address address) {
         AddressDto dto = new AddressDto();

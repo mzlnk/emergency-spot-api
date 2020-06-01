@@ -16,6 +16,8 @@ public class UserDto {
 
     /**
      * Obtain instance based on entity representation
+     * @param user entity
+     * @return DTO instance
      */
     public static UserDto fromEntity(User user) {
         UserDto dto = new UserDto();

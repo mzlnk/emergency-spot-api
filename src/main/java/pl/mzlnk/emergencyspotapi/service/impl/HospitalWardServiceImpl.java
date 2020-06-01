@@ -63,7 +63,7 @@ public class HospitalWardServiceImpl implements HospitalWardService {
 
     /**
      * Create new hospital ward
-     * @param entity DTO instance representing information about creating hospital ward
+     * @param dto DTO instance representing information about creating hospital ward
      * @return details of created hospital ward
      */
     @Override

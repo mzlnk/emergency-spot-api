@@ -18,7 +18,7 @@ public class BiOptional<T, U> {
      * @param second second object
      * @param <T> type of first object
      * @param <U> type of second object
-     * @return
+     * @return BiOptional instance with wrapped both objects
      */
     public static <T, U> BiOptional<T, U> of(Optional<T> first, Optional<U> second) {
         BiOptional<T, U> biOptional = new BiOptional<>();

@@ -48,8 +48,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     /**
      * Same contract as for doFilter, but guaranteed to be just invoked once per request within a single request thread.
-     * @throws IOException
-     * @throws ServletException
+     * @throws IOException .
+     * @throws ServletException .
      */
     @Override
     protected void doFilterInternal(HttpServletRequest req, HttpServletResponse res, FilterChain chain) throws IOException, ServletException {

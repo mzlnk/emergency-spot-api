@@ -11,8 +11,8 @@ public class CORSFilter implements Filter {
      * @param req servlet request
      * @param res servlet response
      * @param chain filter
-     * @throws IOException
-     * @throws ServletException
+     * @throws IOException .
+     * @throws ServletException .
      */
     @Override
     public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {

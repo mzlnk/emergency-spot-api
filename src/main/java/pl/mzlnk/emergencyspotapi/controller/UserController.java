@@ -35,7 +35,7 @@ public class UserController {
     /**
      * Handle GET request to obtain details of user with given ID
      * @param id user's unique ID
-     * @return
+     * @return list of user details
      */
     @PreAuthorize("hasRole('USER')")
     @GetMapping("/{id}")
@@ -55,7 +55,7 @@ public class UserController {
     /**
      * Handle GET request to obtain user username based on provided authentication information
      * @param principal instance containing user authentication data (gained from JWT token)
-     * @return
+     * @return user details
      */
     @GetMapping("/me")
     public Optional<UserDto> getUsername(Principal principal) {

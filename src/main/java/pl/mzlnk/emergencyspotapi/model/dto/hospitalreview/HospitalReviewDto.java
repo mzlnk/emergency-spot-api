@@ -16,6 +16,8 @@ public class HospitalReviewDto {
 
     /**
      * Obtain instance based on entity representation
+     * @param hospitalReview entity
+     * @return DTO instance
      */
     public static HospitalReviewDto fromEntity(HospitalReview hospitalReview) {
         HospitalReviewDto dto = new HospitalReviewDto();

@@ -52,7 +52,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     /**
      * Set configuration for user details
-     * @throws Exception
+     * @throws Exception if setting details failed
      */
     @Autowired
     public void globalUserDetails(AuthenticationManagerBuilder auth) throws Exception {
@@ -63,21 +63,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     /**
      * Obtain JwtAuthenticationFilter instance
      * @return JwtAuthenticationFilter instance
-     * @throws Exception
      */
     @Bean
-    public JwtAuthenticationFilter authenticationTokenFilterBean() throws Exception {
+    public JwtAuthenticationFilter authenticationTokenFilterBean() {
         return new JwtAuthenticationFilter();
     }
 
     /**
-     * Configure resource server endpoints' security.
-     * <p></p>
-     * Indicate which endpoints should be authenticated or permitted without authentication
-     * <p></p>
-     * Attach configuration classes for JWT token support (filters, entrypoints, etc.)
+     * <p>Configure resource server endpoints' security.</p>
+     * <p>Indicate which endpoints should be authenticated or permitted without authentication</p>
+     * <p>Attach configuration classes for JWT token support (filters, entrypoints, etc.)</p>
      * @param http HttpSecurity instance
-     * @throws Exception
+     * @throws Exception if configuration failed
      */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -93,14 +90,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     /**
-     * Configure resource server endpoints' security.
-     * <p></p>
-     * Indicate which endpoints should be ignored in authentication with JWT tokens
+     * <p>Configure resource server endpoints' security.</p>
+     * <p>Indicate which endpoints should be ignored in authentication with JWT tokens</p>
      * @param webSecurity WebSecurity instance
-     * @throws Exception
      */
     @Override
-    public void configure(WebSecurity webSecurity) throws Exception {
+    public void configure(WebSecurity webSecurity) {
         webSecurity
                 .ignoring()
                 .antMatchers("/users/signup", "/token/generate", "/hospitals", "/wards");
