@@ -7,20 +7,26 @@ Backend server with REST API provided for EmergencySpot App. Built with Spring B
 
 * [/hospitals GET](#list-hospitals)
 * [/hospitals/{id} GET](#find-one-hospital)
+* [/hospitals/{id}/wards GET](#find-hospital-wards)
 * [/hospitals/nearest GET](#find-nearest-hospital)
 + [/wards GET](#list-wards)
 + [/wards/{id} GET](#find-one-ward)
++ [/wards/{id}/reviews GET](#find-ward-reviews)
++ [/wards/{id}/stays GET](#find-ward-hospital-stays)
++ [/wards POST](#create-new-hospital-ward)
++ [/wards/{id} DELETE](#delete-existing-hospital-ward)
 * [/reviews GET](#list-reviews)
 * [/reviews/{id} GET](#find-one-review)
 * [/reviews POST](#create-review)
 * [/reviews/{id} PUT](#update-review)
 * [/reviews/{id} DELETE](#delete-review)
-
-### REST API - model structure:
-
-+ [hospital](#hospital)
-+ [ward](#ward)
-+ [review](#review)
++ [/stays GET](#list-hospital-stays)
++ [/stays/{id} GET](#find-one-hospital-stay)
++ [/stays/me GET](#find-user-hospital-stays)
++ [/stays POST](#create-hospital-stay)
++ [/stays DELETE](#delete-hospital-stay)
+* [/users/signup POST](#sign-up)
+* [/token/generate POST](#obtain-token)
 
 ---
 
@@ -47,7 +53,7 @@ Usage:
 
 + `GET /hospitals`
 + `GET /hospitals?name=X`
-+ `GET /hospitals?name=X&city=Y&longitude=30.4516&wards=[ICU,ER]`
++ `GET /hospitals?name=X&city=Y&longitude=30.4516&wards=ICU,ER`
 
 ---
 
@@ -63,6 +69,21 @@ Usage:
 
 + `GET /hospitals/981341`
 + `GET /hospitals/24141`
+
+---
+
+### Find hospital wards
+
+Returns hospital wards associated with hospital with given ID
+
+`GET /hospitals/{id}/ward`
+
++ `id` - hospital ID
+
+Usage:
+
++ `GET /hospitals/981341/wards`
++ `GET /hospitals/24141/wards`
 
 ---
 
@@ -95,7 +116,7 @@ Request params:
 
 | Param           | Description                         | Type            | Required |
 | --------------- | ----------------------------------- | --------------- | -------- |
-| `wards`         | hospital ward types                 | `String`        | *No*     |
+| `wards`         | hospital ward types                 | `Array<String>` | *No*     |
 | `min_capacity`  | minimum hospital ward capacity      | `Double`        | *No*     |
 | `max_capacity`  | maximum hospital capacity           | `Double`        | *No*     |
 | `hospital`      | hospital ID                         | `Long`          | *No*     |
@@ -104,7 +125,7 @@ Usage:
 
 + `GET /wards`
 + `GET /wards?min_capacity=20`
-+ `GET /wards?max_capacity=50&wards=[ICU,ER]
++ `GET /wards?max_capacity=50&wards=ICU,ER
 
 ---
 
@@ -120,6 +141,79 @@ Usage:
 
 + `GET /wards/90111298`
 + `GET /wards/5993210`
+
+---
+
+### Find ward reviews
+
+Returns list of hospital reviews associated with ward with given ID
+
+`GET /wards/{id}/reviews`
+
++ `id` - hospital ward ID
+
+Usage:
+
++ `GET /wards/90111298/reviews`
++ `GET /wards/5993210/reviews`
+
+---
+
+### Find ward hospital stays
+
+Returns list of hospital stays associated with ward with given ID
+
+`GET /wards/{id}/stays`
+
++ `id` - hospital ward ID
+
+Usage:
+
++ `GET /wards/90111298/stays`
++ `GET /wards/5993210/stays`
+
+---
+
+### Create new hospital ward
+
+Create new hospital ward based on given details
+
+`POST /wards`
+
+Request body:
+
+```{json}
+{
+  hospitalId: [hospital_id],
+  wardType: [ward_type],
+  capacity: [capacity]
+}
+```
+
+| Param           | Description                         | Type            | Required |
+| --------------- | ----------------------------------- | --------------- | -------- |
+| `hospitalId`    | hospital associated with new ward   | `Long`          | *Yes*    |
+| `wardType`      | ward type                           | `String`        | *Yes*    |
+| `capacity`      | ward capacity                       | `Double`        | *Yes*    |
+
+Usage:
+
++ `POST /wards`
+
+---
+
+### Delete existing hospital ward
+
+Delete existing hospital ward by given ID.
+
+`DELETE /wards/{id}`
+
++ `id` - hospital ward ID
+
+Usage:
+
++ `DELETE /wards/90111298`
++ `DELETE /wards/5993210`
 
 ---
 
@@ -170,19 +264,15 @@ Request body:
 
 ```json
 {
-  "userId": [userId],
-  "review": [review],
+  "hospitalStayId": [hospitalStayId],
   "rating": [rating],
-  "hospitalId": [hospitalId]
 }
 ```
 
-| Param           | Description                         | Type            | Required |
-| --------------- | ----------------------------------- | --------------- | -------- |
-| `userId`        | user associated with review         | `Long`          | *Yes*    |
-| `review`        | review description                  | `String`        | *Yes*    |
-| `rating`        | review rating                       | `Double`        | *Yes*    |
-| `hospitalId`    | hospital ID associated with review  | `Long`          | *Yes*    |
+| Param            | Description                           | Type            | Required |
+| ---------------- | ------------------------------------- | --------------- | -------- |
+| `hospitalStayId` | hospital stay associated with review  | `Long`          | *Yes*    |
+| `rating`         | review rating                         | `Double`        | *Yes*    |
 
 ---
 
@@ -190,21 +280,25 @@ Request body:
 
 Updates exisiting review.
 
-`PUT /reviews/{id}`
+`PUT /reviews`
 
-+ `id` - review ID
+Request body:
 
-Request params:
+```json
+{
+  "hospitalStayId": [hospitalStayId],
+  "rating": [rating],
+}
+```
 
-| Param           | Description                         | Type            | Required |
-| --------------- | ----------------------------------- | --------------- | -------- |
-| `review`        | review description                  | `String`        | *No*     |
-| `rating`        | review rating                       | `Double`        | *No*     |
+| Param              | Description                         | Type            | Required |
+| ------------------ | ----------------------------------- | --------------- | -------- |
+| `hospitalReviewId` | rhospital review ID                 | `Long`          | *Yes*    |
+| `newRating`        | new review rating                   | `Double`        | *Yes*    |
 
 Usage:
 
-+ `PUT /reviews/1940380?rating=9.0`
-+ `PUT /reviews/193755113?review=X&rating=5.6`
++ `PUT /reviews`
 
 ---
 
@@ -223,66 +317,128 @@ Usage:
 
 ---
 
-## Model structure:
+### List hospital stays
 
-Describes details about hospital with given ID.
+Return all hospital stays matching to applied filters.
 
-### hospital
+`GET /stays`
+
+Request params:
+
+| Param           | Description                                                  | Type        | Required | Format       |
+| --------------- | ------------------------------------------------------------ | ------------| -------- | ------------ |
+| `date_from`     | start date range                                             | `Calendar`  | *No*     | *dd-MM-yyyy* |
+| `date_to`       | end date range                                               | `Calendar`  | *No*     | *dd-MM-yyyy* |
+| `ward`          | hospital ward's ID where hospital stay is associated with    | `Long`      | *No*     |              |
+| `patient`       | hospital patient's ID where hospital stay is associated with | `Long`      | *No*     |              |
+
+Usage:
+
++ `GET /stays`
++ `GET /stays?date_from=01-01-2020`
++ `GET /stays?ward=1&patient=18314`
+
+---
+
+### Find one hospital stay
+
+Return hospital stay with given ID.
+
+`GET /stay/{id}`
+
++ `id` - hospital stay ID
+
+Usage:
+
++ `GET /stays/71401298`
++ `GET /stays/3613210`
+
+---
+
+### Find user hospital stays
+
+Return hospital stays associated with user.
+
+`GET /stay/me`
+
+Usage:
+
++ `GET /stays/me`
+
+---
+
+### Create hospital stay
+
+Create new hospital stay
+
+`POST /stays`
+
+Request body:
 
 ```json
 {
-  "id": 1,
-  "name": "Hospital 1",
-  "description": "Hospital Description",
-  "longitude":3 0.5689,
-  "latitude": 70.2391,
-  "country": "US",
-  "city": "New York",
-  "street": "10th Street",
-  "streetNumber": 1092,
-  "wards": [
-    {
-      "id": 3,
-      "wardType": "ICU", 
-      "capacity": 200
-    },
-    {
-      "id": 4,
-      "wardType": "ICU",
-      "capacity": 200
-    }
-  ],
-  "reviews": []
+  hospitalWardId: [hospital_ward_id],
+  patientId: [patient_id],
+  dateFrom: [date_from],
+  dateTo: [date_to]
+}
+```
+
+| Param            | Description                           | Type            | Required | Format       |
+| ---------------- | ------------------------------------- | --------------- | -------- | ------------ |
+| `hospitalWardId` | hospital ward associated with stay    | `Long`          | *Yes*    | *dd-MM-yyyy* |
+| `patientId`      | patient associated with stay          | `Long`          | *Yes*    |              |
+| `dateFrom`       | hospital stay start date              | `Calendar`      | *Yes*    | *dd-MM-yyyy* |
+| `dateTo`         | hospital stay end date                | `Calendar`      | *Yes*    | *dd-MM-yyyy* |
+
+---
+
+### Delete hospital stay
+
+Deletes hospital stay with given ID
+
+`DELETE /stays/{id}`
+
++ `id` - hospital stay ID
+
+Usage:
+
++ `DELETE /stays/1748391`
++ `DELETE /stays/6382649001`
+
+---
+
+### Sign up
+
+Creates new user with provided details
+
+`POST /users/signup`
+
+Request body:
+
+```json
+{
+  username: [username],
+  firstName: [first_name],
+  lastName: [last_name],
+  pesel: [pesel],
+  password: [password]
 }
 ```
 
 ---
 
-### ward
+### Obtain token
 
-Describes details about hospital ward with given ID.
+Obtain JWT token based on provided authentication details
 
-```json
-{
-  "id": 3,
-  "wardType": "ICU",
-  "capacity": 200,
-  "hospitalId": 1
-}
-```
+`POST /token/generate`
 
----
-
-### review
-
-Describes details about user review associated with hospital.
+Request body:
 
 ```json
 {
-  "id": 57294,
-  "review": "ECU in Hospital 1 review",
-  "rating": 7.8,
-  "userId": 194781,
-  "hospitalId": 8492
+  username: [username],
+  password: [password]
 }
 ```
