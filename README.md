@@ -2,8 +2,46 @@
 
 Backend server with REST API provided for EmergencySpot App. Built with Spring Boot Web and secured with JWT authorization.
 
+Documentation available here: https://docs.mzlnk.pl/emergencyspotapi
 
-### REST API - endpoints:
+---
+
+## Build
+
+To build project:
+- clone project from this repository
+- fill credentials in `application.properties` file
+- build `jar` file using command `mvn clean package`
+- run `jar` file using command `java -jar emergency-spot-api-1.1.jar`
+
+---
+
+## Credentials
+
+Before deploy app, you have to fill credentials in `application.properties` file:
+
+```properties
+server.port=${PORT:5000}
+
+spring.jpa.database=mysql
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQL57InnoDBDialect
+spring.datasource.url=jdbc:mysql://[host]:[port]/[db_name]
+spring.datasource.username=[user]
+spring.datasource.password=[password]
+
+spring.jackson.serialization.indent_output=true
+
+emergencyspotapi.jwt.access.token.validity=18000
+emergencyspotapi.jwt.secret=[secret_key]
+emergencyspotapi.jwt.token.prefix=Bearer\u0020
+emergencyspotapi.jwt.header=Authorization
+emergencyspotapi.jwt.authorities.key=scopes
+```
+
+---
+
+## REST API - endpoints:
 
 * [/hospitals GET](#list-hospitals)
 * [/hospitals/{id} GET](#find-one-hospital)
@@ -27,10 +65,6 @@ Backend server with REST API provided for EmergencySpot App. Built with Spring B
 + [/stays DELETE](#delete-hospital-stay)
 * [/users/signup POST](#sign-up)
 * [/token/generate POST](#obtain-token)
-
----
-
-## Endpoints:
 
 ### List hospitals
 
