@@ -2,8 +2,6 @@
 
 Backend server with REST API provided for EmergencySpot App. Built with Spring Boot Web and secured with JWT authorization.
 
-Documentation available here: https://docs.mzlnk.pl/emergencyspotapi
-
 ---
 
 ## About project
